@@ -5,6 +5,7 @@ import com.mojang.minecraft.gui.Screen;
 import com.mojang.minecraft.level.tile.Tile;
 import com.mojang.minecraft.renderer.Tesselator;
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
+import me.kalmemarq.legacygui.util.Language;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.GL11;
 
@@ -15,72 +16,75 @@ public class CreativeInventoryScreen extends ExtraScreen {
         public static Map<Integer, TileID> TILE_IDS = new HashMap<>();
         public static List<TileID> CREATIVE_LIST = new ArrayList<>();
 
-        public static TileID UNKNOWN = new TileID(-1, "UNKNOWN");
-        public static TileID OBDISIAN = new TileID(49, "Obdisian", true);
-        public static TileID MOSSY = new TileID(48, "Mossy Cobblestone", true);
-        public static TileID BOOKSHELF = new TileID(47, "Bookshelf", true);
-        public static TileID TNT = new TileID(46, "TNT", true);
-        public static TileID BRICKS = new TileID(45, "Bricks", true);
-        public static TileID SLAB = new TileID(44, "Slab", true);
-        public static TileID DOUBLE_SLAB = new TileID(43, "Double Slab", true);
-        public static TileID IRON_BLOCK = new TileID(42, "Iron Block", true);
-        public static TileID GOLD_BLOCK = new TileID(41, "Gold Block", true);
-        public static TileID RED_MUSHROOM = new TileID(40, "Red Mushroom", true);
-        public static TileID BROWN_MUSHROOM = new TileID(39, "Brown Mushroom", true);
-        public static TileID ROSE = new TileID(38, "Rose", true);
-        public static TileID DANDELION = new TileID(37, "Dandelion", true);
-        public static TileID WHITE_CLOTH = new TileID(36, "White Cloth", true);
-        public static TileID LIGHT_CLOTH = new TileID(35, "Light Gray Cloth", true);
-        public static TileID DARK_CLOTH = new TileID(34, "Dark Gray Cloth", true);
-        public static TileID ROSE_CLOTH = new TileID(33, "Rose Cloth", true);
-        public static TileID MAGENTA_CLOTH = new TileID(32, "Magenta Cloth", true);
-        public static TileID PURPLE_CLOTH = new TileID(31, "Purple Cloth", true);
-        public static TileID VIOLET_CLOTH = new TileID(30, "Violet Cloth", true);
-        public static TileID ULTRAMARINE_CLOTH = new TileID(29, "Ultramarine Cloth", true);
-        public static TileID CAPRI_CLOTH = new TileID(28, "Capri Cloth", true);
-        public static TileID CYAN_CLOTH = new TileID(27, "Cyan Cloth", true);
-        public static TileID SPRING_CLOTH = new TileID(26, "Spring Green Cloth", true);
-        public static TileID GREEN_CLOTH = new TileID(25, "Green Cloth", true);
-        public static TileID CHARTREUSE_CLOTH = new TileID(24, "Chartreuse Cloth", true);
-        public static TileID YELLOW_CLOTH = new TileID(23, "Yellow Cloth", true);
-        public static TileID ORANGE_CLOTH = new TileID(22, "Orange Cloth", true);
-        public static TileID RED_CLOTH = new TileID(21, "Red Cloth", true);
-        public static TileID GLASS = new TileID(20, "Glass", true);
-        public static TileID SPONGE = new TileID(19, "Sponge", true);
-        public static TileID LEAVES = new TileID(18, "Leaves", true);
-        public static TileID LOG = new TileID(17, "Log", true);
-        public static TileID COAL_ORE = new TileID(16, "Coal Ore", true);
-        public static TileID IRON_ORE = new TileID(15, "Iron Ore", true);
-        public static TileID GOLD_ORE = new TileID(14, "Gold Ore", true);
-        public static TileID GRAVEL = new TileID(13, "Gravel", true);
-        public static TileID SAND = new TileID(12, "Sand", true);
-        public static TileID CALM_LAVA = new TileID(11, "Calm Lava", true);
-        public static TileID LAVA = new TileID(10, "Lava", true);
-        public static TileID CALM_WATER = new TileID(9, "Calm Water", true);
-        public static TileID WATER = new TileID(8, "Water", true);
-        public static TileID UNBREAKABLE = new TileID(7, "Unbreakable");
-        public static TileID BUSH = new TileID(6, "Bush", true);
-        public static TileID WOOD = new TileID(5, "Wood", true);
-        public static TileID STONE_BRICK = new TileID(4, "Stone Brick", true);
-        public static TileID DIRT = new TileID(3, "Dirt", true);
-        public static TileID GRASS = new TileID(2, "Grass", true);
-        public static TileID ROCK = new TileID(1, "Rock", true);
-        public static TileID AIR = new TileID(0, "Air");
+        public static TileID UNKNOWN = new TileID(-1, "UNKNOWN", "UNKWONW");
+        public static TileID OBDISIAN = new TileID(49, "Obdisian", "minecraft.tile.obsidian", true);
+        public static TileID MOSSY = new TileID(48, "Mossy Cobblestone", "minecraft.tile.mossy_cobblestone", true);
+        public static TileID BOOKSHELF = new TileID(47, "Bookshelf", "minecraft.tile.bookshelf", true);
+        public static TileID TNT = new TileID(46, "TNT", "minecraft.tile.tnt", true);
+        public static TileID BRICKS = new TileID(45, "Bricks", "minecraft.tile.bricks", true);
+        public static TileID SLAB = new TileID(44, "Slab", "minecraft.tile.slab", true);
+        public static TileID DOUBLE_SLAB = new TileID(43, "Double Slab", "minecraft.tile.double_slab", true);
+        public static TileID IRON_BLOCK = new TileID(42, "Iron Block", "minecraft.tile.iron_block", true);
+        public static TileID GOLD_BLOCK = new TileID(41, "Gold Block", "minecraft.tile.gold_block", true);
+        public static TileID RED_MUSHROOM = new TileID(40, "Red Mushroom", "minecraft.tile.red_mushroom", true);
+        public static TileID BROWN_MUSHROOM = new TileID(39, "Brown Mushroom", "minecraft.tile.brown_mushroom", true);
+        public static TileID ROSE = new TileID(38, "Rose", "minecraft.tile.rose", true);
+        public static TileID DANDELION = new TileID(37, "Dandelion", "minecraft.tile.dandelion", true);
+        public static TileID WHITE_CLOTH = new TileID(36, "White Cloth", "minecraft.tile.white_cloth", true);
+        public static TileID LIGHT_CLOTH = new TileID(35, "Light Gray Cloth", "minecraft.tile.light_cloth", true);
+        public static TileID DARK_CLOTH = new TileID(34, "Dark Gray Cloth", "minecraft.tile.dark_cloth", true);
+        public static TileID ROSE_CLOTH = new TileID(33, "Rose Cloth", "minecraft.tile.rose_cloth", true);
+        public static TileID MAGENTA_CLOTH = new TileID(32, "Magenta Cloth", "minecraft.tile.magenta_cloth", true);
+        public static TileID PURPLE_CLOTH = new TileID(31, "Purple Cloth", "minecraft.tile.purple_cloth", true);
+        public static TileID VIOLET_CLOTH = new TileID(30, "Violet Cloth", "minecraft.tile.violet_cloth", true);
+        public static TileID ULTRAMARINE_CLOTH = new TileID(29, "Ultramarine Cloth", "minecraft.tile.ultramarine_cloth", true);
+        public static TileID CAPRI_CLOTH = new TileID(28, "Capri Cloth", "minecraft.tile.capri_cloth", true);
+        public static TileID CYAN_CLOTH = new TileID(27, "Cyan Cloth", "minecraft.tile.cyan_cloth", true);
+        public static TileID SPRING_CLOTH = new TileID(26, "Spring Green Cloth", "minecraft.tile.spring_cloth", true);
+        public static TileID GREEN_CLOTH = new TileID(25, "Green Cloth", "minecraft.tile.green_cloth", true);
+        public static TileID CHARTREUSE_CLOTH = new TileID(24, "Chartreuse Cloth", "minecraft.tile.chartreuse_cloth", true);
+        public static TileID YELLOW_CLOTH = new TileID(23, "Yellow Cloth", "minecraft.tile.yellow_cloth", true);
+        public static TileID ORANGE_CLOTH = new TileID(22, "Orange Cloth", "minecraft.tile.orange_cloth", true);
+        public static TileID RED_CLOTH = new TileID(21, "Red Cloth", "minecraft.tile.red_cloth", true);
+        public static TileID GLASS = new TileID(20, "Glass", "minecraft.tile.glass", true);
+        public static TileID SPONGE = new TileID(19, "Sponge", "minecraft.tile.sponge", true);
+        public static TileID LEAVES = new TileID(18, "Leaves", "minecraft.tile.leaves", true);
+        public static TileID LOG = new TileID(17, "Log", "minecraft.tile.log", true);
+        public static TileID COAL_ORE = new TileID(16, "Coal Ore", "minecraft.tile.coal_ore", true);
+        public static TileID IRON_ORE = new TileID(15, "Iron Ore", "minecraft.tile.iron_ore", true);
+        public static TileID GOLD_ORE = new TileID(14, "Gold Ore", "minecraft.tile.gold_ore", true);
+        public static TileID GRAVEL = new TileID(13, "Gravel", "minecraft.tile.gravel", true);
+        public static TileID SAND = new TileID(12, "Sand", "minecraft.tile.sand", true);
+        public static TileID CALM_LAVA = new TileID(11, "Calm Lava", "minecraft.tile.calm_lava", true);
+        public static TileID LAVA = new TileID(10, "Lava", "minecraft.tile.lava", true);
+        public static TileID CALM_WATER = new TileID(9, "Calm Water", "minecraft.tile.calm_water", true);
+        public static TileID WATER = new TileID(8, "Water", "minecraft.tile.water", true);
+        public static TileID UNBREAKABLE = new TileID(7, "UNBREAKABLE", "minecraft.tile.unbreakable", true);
+        public static TileID BUSH = new TileID(6, "Bush", "minecraft.tile.bush", true);
+        public static TileID WOOD = new TileID(5, "Wood", "minecraft.tile.wood", true);
+        public static TileID STONE_BRICK = new TileID(4, "Stone Brick", "minecraft.tile.stone_brick", true);
+        public static TileID DIRT = new TileID(3, "Dirt", "minecraft.tile.dirt", true);
+        public static TileID GRASS = new TileID(2, "Grass", "minecraft.tile.grass", true);
+        public static TileID ROCK = new TileID(1, "Rock", "minecraft.tile.rock", true);
+        public static TileID AIR = new TileID(0, "Air", "minecraft.tile.air", false);
 
         private final int id;
         private final String name;
+        private final String idName;
         private final boolean onCreative;
 
-        private TileID(int id, String name) {
+        private TileID(int id, String name, String idName) {
             this.id = id;
             this.name = name;
+            this.idName = idName;
             this.onCreative = false;
             TileID.TILE_IDS.put(id, this);
         }
 
-        private TileID(int id, String name, boolean onCreative) {
+        private TileID(int id, String name, String idName, boolean onCreative) {
             this.id = id;
             this.name = name;
+            this.idName = idName;
             this.onCreative = onCreative;
             TileID.TILE_IDS.put(id, this);
             if (onCreative) {
@@ -99,6 +103,10 @@ public class CreativeInventoryScreen extends ExtraScreen {
 
         public String getName() {
             return this.name;
+        }
+
+        public String getTranslationKey() {
+            return this.idName;
         }
 
         public Tile getTile() {
@@ -135,7 +143,7 @@ public class CreativeInventoryScreen extends ExtraScreen {
                 GL11.glRotatef(-30.0F, 1.0F, 0.0F, 0.0F);
                 GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
 
-                GL11.glTranslatef(-1.5F, 0.5F, 0.5F);
+                GL11.glTranslatef(-1.6F, 0.9F, 0.5F);
                 GL11.glScalef(-1.0F, -1.0F, -1.0F);
                 tesselator.begin();
                 tile.renderAsIcon(tesselator);
@@ -182,7 +190,9 @@ public class CreativeInventoryScreen extends ExtraScreen {
     public void render(int mouseX, int mouseY) {
         this.renderGradientBackground();
         int rows = (int)Math.ceil((TileID.CREATIVE_LIST.size() / 9.0f));
-        ExtraDrawableHelper.fillX(this.width / 2 - (9 * Slot.SLOT_SIZE / 2), this.height / 2 - (rows * Slot.SLOT_SIZE  /2), this.width / 2 + (9 * Slot.SLOT_SIZE / 2), this.height / 2 + (rows * Slot.SLOT_SIZE  /2), 0xFF333333);
+        ExtraDrawableHelper.fillX(this.width / 2 - (9 * Slot.SLOT_SIZE / 2), this.height / 2 - (rows * Slot.SLOT_SIZE  /2), this.width / 2 + (9 * Slot.SLOT_SIZE / 2), this.height / 2 + (rows * Slot.SLOT_SIZE  /2) - 4, 0xFF333333);
+
+        drawCenteredString(this.font, "Select block", this.width / 2, 30, 16777215);
 
         int txrId = this.minecraft.textures.getTextureId("/terrain.png");
         Tesselator tesselator = Tesselator.instance;
@@ -198,59 +208,12 @@ public class CreativeInventoryScreen extends ExtraScreen {
 
         if (s != null) {
             fillGradient(s.x + 1, s.y + 1, s.x + 16 + 1, s.y + 16 + 1, -1862270977, -1056964609);
-            this.drawTooltip(s.tileid.getName(), mouseX, mouseY);
+            this.drawTooltip(Language.translate(s.tileid.getTranslationKey()), mouseX, mouseY);
         }
 
-//        mouseX = this.getHoveredTile(mouseX, mouseY);
-//        ExtraDrawableHelper.fillX(this.width / 2 - 120, 30, this.width / 2 + 120, 180, 0xFF333333);
-//
-//        if (mouseX >= 0) {
-//            mouseY = this.width / 2 + mouseX % 9 * 24 + -108;
-//            int var3 = this.height / 2 + mouseX / 9 * 24 + -60;
-//            fillGradient(mouseY - 3 + 3, var3 - 8 + 3, mouseY + 23 - 3, var3 + 24 - 6- 3, -1862270977, -1056964609);
-//
-////            this.drawTooltip(TileID.CREATIVE_LIST.get(mouseX).getName(), mX, mY);
-//        }
-//
-//        drawCenteredString(this.font, "Select block", this.width / 2, 40, 16777215);
-//        int txrId = this.minecraft.textures.getTextureId("/terrain.png");
-//        Tesselator var8 = Tesselator.instance;
-//        GL11.glBindTexture(3553, txrId);
-//
-//        for(mouseY = 0; mouseY < TileID.CREATIVE_LIST.size(); ++mouseY) {
-//            Tile var4 = (Tile)TileID.CREATIVE_LIST.get(mouseY).getTile();
-//            GL11.glPushMatrix();
-//            int var5 = this.width / 2 + mouseY % 9 * 24 + -108;
-//            int var6 = this.height / 2 + mouseY / 9 * 24 + -60;
-//            GL11.glTranslatef((float)var5, (float)var6, 0.0F);
-//            GL11.glScalef(10.0F, 10.0F, 10.0F);
-//            GL11.glTranslatef(1.0F, 0.5F, 8.0F);
-//            GL11.glRotatef(-30.0F, 1.0F, 0.0F, 0.0F);
-//            GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
-////            if (mouseX == mouseY) {
-////                GL11.glScalef(1.6F, 1.6F, 1.6F);
-////            }
-//
-//            GL11.glTranslatef(-1.5F, 0.5F, 0.5F);
-//            GL11.glScalef(-1.0F, -1.0F, -1.0F);
-//            var8.begin();
-//            var4.renderAsIcon(var8);
-//            var8.end();
-//            GL11.glPopMatrix();
-//        }
     }
 
-    private int getHoveredTile(int mouseX, int mouseY) {
-        for(int var3 = 0; var3 < TileID.CREATIVE_LIST.size(); ++var3) {
-            int var4 = this.width / 2 + var3 % 9 * 24 + -108 - 3;
-            int var5 = this.height / 2 + var3 / 9 * 24 + -60 + 3;
-            if (mouseX >= var4 && mouseX <= var4 + 24 && mouseY >= var5 - 12 && mouseY <= var5 + 12) {
-                return var3;
-            }
-        }
 
-        return -1;
-    }
 
     @Override
     protected void mouseClicked(int x, int y, int button) {
@@ -258,8 +221,8 @@ public class CreativeInventoryScreen extends ExtraScreen {
             Slot slot = this.getSlot(x, y);
 
             if (slot != null) {
-                System.out.println(x + " - " + y + " - " + slot.tileid.getName() + " - " + slot.tileid.getId());
-                this.minecraft.player.inventory.replaceSlot(slot.tile.id);
+                System.out.println(x + " - " + y + " - " + slot.tileid.getName() + " - " + slot.tileid.getId() + " - " + (slot.tile.id));
+                this.minecraft.player.inventory.replaceSlot(slot.tile);
                 this.minecraft.openScreen((Screen)null);
                 return;
             }

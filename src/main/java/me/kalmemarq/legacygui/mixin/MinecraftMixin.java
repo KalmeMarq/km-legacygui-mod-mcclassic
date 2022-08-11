@@ -3,11 +3,13 @@ package me.kalmemarq.legacygui.mixin;
 import com.mojang.minecraft.*;
 import com.mojang.minecraft.gamemode.GameMode;
 import com.mojang.minecraft.gui.CreativeBuildScreen;
+import com.mojang.minecraft.gui.InGameHud;
 import com.mojang.minecraft.gui.PauseScreen;
 import com.mojang.minecraft.gui.Screen;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.LevelRenderer;
 import me.kalmemarq.legacygui.SurvivalMode;
+import me.kalmemarq.legacygui.gui.ITickable;
 import me.kalmemarq.legacygui.gui.screen.*;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,6 +33,8 @@ public abstract class MinecraftMixin {
 
 	@Shadow public LevelRenderer levelRenderer;
 
+	@Shadow public InGameHud hud;
+
 	@Inject(at = @At("HEAD"), method = "run")
 	private void run(CallbackInfo info) {
 		this.user.hasPaid = true;
@@ -42,10 +46,19 @@ public abstract class MinecraftMixin {
 			if (Keyboard.getEventKey() == Keyboard.KEY_F3) {
 				TitleScreen.showF3 = !TitleScreen.showF3;
 			}
+
+			if (Keyboard.getEventKey() == Keyboard.KEY_F1) {
+				TitleScreen.hideHud = !TitleScreen.hideHud;
+			}
 		}
 	}
 
-	@Redirect(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/Minecraft;generateNewLevel(I)V"))
+	@Inject(method = "tick", at = @At("TAIL"))
+	private void ticka(CallbackInfo ci) {
+		((ITickable)(Object) this.hud).tick();
+	}
+
+		@Redirect(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/Minecraft;generateNewLevel(I)V"))
 	private void generateNewLevelPrevent(Minecraft instance, int i) {
 		this.openScreen(new TitleScreen());
 	}

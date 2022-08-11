@@ -2,37 +2,40 @@ package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.gui.Screen;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
+import me.kalmemarq.legacygui.util.Language;
 import org.lwjgl.input.Keyboard;
+
+import java.util.spi.LocaleNameProvider;
 
 public class GameMenuScreen extends ExtraScreen {
     public GameMenuScreen() {
-        super("Game Menu");
+        super(Language.translate("menu.game"));
     }
 
     @Override
     public void init() {
-        this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20, "Return to Game", (button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20, Language.translate("menu.return_to_game"), (button -> {
             this.minecraft.openScreen(null);
             this.minecraft.grabMouse();
         })));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 48 + -16, 204, 20, "Generate new level...", button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 48 + -16, 204, 20, Language.translate("menu.generateLevel"), button -> {
             this.minecraft.openScreen(new CreateNewLevelScreen(this));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 72 + -16, 98, 20, "Save level...", button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 72 + -16, 98, 20, Language.translate("menu.saveLevel"), button -> {
             this.minecraft.openScreen(new LevelSaveScreen(this));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 + 4, this.height / 4 + 72 + -16, 98, 20, "Load level...", button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 + 4, this.height / 4 + 72 + -16, 98, 20, Language.translate("menu.loadLevel"), button -> {
             this.minecraft.openScreen(new LevelLoadScreen(this));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 96 + -16, 204, 20, "Options...", button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 96 + -16, 204, 20, Language.translate("menu.options"), button -> {
             this.minecraft.openScreen(new OptionsScreen(this, this.minecraft.options));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 120 + -16, 204, 20, "Quit to title screen", button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 120 + -16, 204, 20, this.minecraft.connectionManager != null ? Language.translate("menu.disconnect") : Language.translate("menu.return_to_title"), button -> {
             if (this.minecraft.connectionManager != null) {
                 this.minecraft.connectionManager.connection.disconnect();
                 this.minecraft.connectionManager = null;

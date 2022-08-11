@@ -7,13 +7,14 @@ import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.net.ConnectionManager;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
 import me.kalmemarq.legacygui.gui.component.EditTextWidget;
+import me.kalmemarq.legacygui.util.Language;
 import org.lwjgl.input.Keyboard;
 
 public class MultiplayerScreen extends ExtraScreen {
     private final Screen parent;
 
     public MultiplayerScreen(Screen parent) {
-        super("Connect to Server");
+        super(Language.translate("multiplayer.title"));
         this.parent = parent;
     }
 
@@ -30,7 +31,7 @@ public class MultiplayerScreen extends ExtraScreen {
         this.playerNameBox.setValue("KalmeMarq");
         this.serverAddressBox.setValue("localhost:25565");
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168 - 24, 200, 20, "Connect", (button) -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168 - 24, 200, 20, Language.translate("multiplayer.connect"), (button) -> {
             if (!this.serverAddressBox.getValue().isEmpty()) {
                 try {
                     Level level = new Level();
@@ -64,7 +65,7 @@ public class MultiplayerScreen extends ExtraScreen {
             }
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168, 200, 20, "Cancel", (button) -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168, 200, 20, Language.translate("gui.done"), (button) -> {
             this.minecraft.openScreen(this.parent);
         }));
     }
@@ -78,8 +79,8 @@ public class MultiplayerScreen extends ExtraScreen {
     public void render(int mouseX, int mouseY) {
         this.renderBackground();
         drawCenteredString(this.font, this.title, this.width / 2, 15, 16777215);
-        drawString(this.font, "Username", this.width / 2 - 100, this.height / 4 - 12, 0xbbbbbb);
-        drawString(this.font, "Server Address", this.width / 2 - 100, this.height / 4 - 12 + 40, 0xbbbbbb);
+        drawString(this.font, Language.translate("multiplayer.username"), this.width / 2 - 100, this.height / 4 - 12, 0xbbbbbb);
+        drawString(this.font, Language.translate("multiplayer.server_address"), this.width / 2 - 100, this.height / 4 - 12 + 40, 0xbbbbbb);
         super.render(mouseX, mouseY);
     }
 }

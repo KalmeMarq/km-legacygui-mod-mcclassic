@@ -3,7 +3,13 @@ package me.kalmemarq.legacygui.mixin;
 import com.mojang.minecraft.Entity;
 import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.gui.InGameHud;
+import com.mojang.minecraft.item.Item;
+import me.kalmemarq.legacygui.gui.ITickable;
+import me.kalmemarq.legacygui.gui.screen.CreativeInventoryScreen;
 import me.kalmemarq.legacygui.gui.screen.TitleScreen;
+import me.kalmemarq.legacygui.util.GlConst;
+import me.kalmemarq.legacygui.util.Language;
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,12 +19,68 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(InGameHud.class)
-public class InGameHudMixin {
+public class InGameHudMixin implements ITickable {
     @Shadow private Minecraft minecraft;
+    @Shadow private int scaledWidth;
+    @Shadow private int scaledHeight;
+    private int toolHighlightTimer;
+    private int lastToolHighlight;
+    private int tickCount;
+
+    @Inject(method = "render", at = @At(value = "HEAD"), cancellable = true)
+    private void renderHidHud(float hasScreen, boolean mouseX, int mouseY, int par4, CallbackInfo ci) {
+        if (TitleScreen.hideHud) {
+            ci.cancel();
+        }
+    }
+
+    public void tick() {
+        ++this.tickCount;
+
+        if (this.minecraft.player != null) {
+            int id = this.minecraft.player.inventory.getSelected();
+
+            if (id == -1) {
+                this.toolHighlightTimer = 0;
+            } else if (this.lastToolHighlight != -1 && id == this.lastToolHighlight) {
+                if (this.toolHighlightTimer > 0) {
+                    --this.toolHighlightTimer;
+                }
+            } else {
+                this.toolHighlightTimer = 40;
+            }
+
+            this.lastToolHighlight = id;
+        }
+    }
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/gui/Font;drawShadow(Ljava/lang/String;III)V"))
     private void render(float hasScreen, boolean mouseX, int mouseY, int par4, CallbackInfo ci) {
 //        this.minecraft.font.drawShadow("Fabric Mod in classic 0.30. what a time to be alive...", 50, 1, 0xFF00FF);
+
+        if (this.toolHighlightTimer > 0 && lastToolHighlight > -1) {
+            int x = this.scaledWidth / 2 - this.minecraft.font.width(Language.translate(CreativeInventoryScreen.TileID.get(this.lastToolHighlight).getTranslationKey())) / 2;
+            int y = this.scaledHeight - 59;
+
+            if (this.minecraft.player != null) {
+                if (!this.minecraft.gameMode.creative) {
+                    y += 14;
+                }
+            }
+
+            int textAlpha = (int)((float)this.toolHighlightTimer * 256.0F / 10.0F);
+            if (textAlpha > 255) {
+                textAlpha = 255;
+            }
+
+            if (textAlpha > 0) {
+                GL11.glEnable(GlConst.GL_BLEND);
+                GL11.glColor4f(1.0f, 1.0f, 1.0f, textAlpha / 255.0f);
+                this.minecraft.font.drawShadow(Language.translate(CreativeInventoryScreen.TileID.get(this.lastToolHighlight).getTranslationKey()), x, y, 16777215);
+                GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                GL11.glDisable(GlConst.GL_BLEND);
+            }
+        }
 
         if (TitleScreen.showF3) {
         int y = 11;

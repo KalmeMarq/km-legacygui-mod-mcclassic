@@ -1,5 +1,6 @@
 package me.kalmemarq.legacygui;
 
+import me.kalmemarq.legacygui.util.Language;
 import me.kalmemarq.legacygui.util.SplashManager;
 import net.fabricmc.api.ModInitializer;
 
@@ -12,5 +13,6 @@ public class LegacyGUIMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		SplashManager.load();
+		Language.load();
 	}
 }

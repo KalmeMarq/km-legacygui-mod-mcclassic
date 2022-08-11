@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ErrorScreenMixin extends Screen {
     @Inject(method = "init", at = @At("TAIL"))
     private void mainmenu_addExis(CallbackInfo ci) {
-        this.buttons.add(new Button(100,this.width / 2 - 100, this.height / 4 + 120 + 24, "Exit to menu"));
+        this.buttons.add(new Button(100,this.width / 2 - 100, this.height / 4 + 120 - 48, "Exit to menu"));
     }
 
     @Override

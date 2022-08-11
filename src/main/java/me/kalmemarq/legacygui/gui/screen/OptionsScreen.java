@@ -5,21 +5,25 @@ import com.mojang.minecraft.e.c;
 import com.mojang.minecraft.gui.NarrowButton;
 import com.mojang.minecraft.gui.Screen;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
+import me.kalmemarq.legacygui.util.Language;
 import org.lwjgl.input.Keyboard;
+
+import java.util.Objects;
 
 public class OptionsScreen extends ExtraScreen {
     private final Screen parent;
     private final Options options;
 
     public OptionsScreen(Screen parent, Options options) {
-        super("Options");
+        super(Language.translate("options.title"));
         this.parent = parent;
         this.options  = options;
     }
 
     @Override
     public void init() {
-        for(int i = 0; i < this.options.optionCount; ++i) {
+        int i;
+        for(i = 0; i < this.options.optionCount; ++i) {
             int finalI = i;
             this.addWidget(new ButtonWidget(this.width / 2 - 155 + i % 2 * 160, this.height / 6 + 24 * (i >> 1), 150, 20, this.options.getOptionLabel(i), button -> {
                 this.options.cycleOption(finalI, 1);
@@ -27,11 +31,24 @@ public class OptionsScreen extends ExtraScreen {
             }));
         }
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 120 + 12, 200, 20, "Controls...", (button -> {
+        ++i;
+
+        this.addWidget(new ButtonWidget(this.width / 2 - 155 + i % 2 * 160, this.height / 6 + 24 * (i >> 1), 150, 20, "Language: " + Language.language, button -> {
+            if (Objects.equals(Language.language, "en_us")) {
+                Language.language = "pt_pt";
+            } else if (Objects.equals(Language.language, "pt_pt")) {
+                Language.language = "en_us";
+            }
+            Language.load();
+            button.setMessage("Language: " + Language.language);
+            this.minecraft.openScreen(this);
+        }));
+
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 120 + 12, 200, 20, Language.translate("options.controls"), (button -> {
             this.minecraft.openScreen(new KeybindScreen(this, this.options));
         })));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168, 200, 20, "Done", (button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168, 200, 20, Language.translate("gui.done"), (button -> {
             this.minecraft.openScreen(this.parent);
         })));
     }

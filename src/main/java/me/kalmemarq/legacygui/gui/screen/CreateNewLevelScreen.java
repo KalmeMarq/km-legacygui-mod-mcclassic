@@ -5,6 +5,7 @@ import com.mojang.minecraft.gui.Button;
 import com.mojang.minecraft.gui.Screen;
 import me.kalmemarq.legacygui.SurvivalMode;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
+import me.kalmemarq.legacygui.util.Language;
 
 public class CreateNewLevelScreen extends ExtraScreen {
     private final Screen parent;
@@ -13,29 +14,29 @@ public class CreateNewLevelScreen extends ExtraScreen {
     private boolean isCreative = true;
 
     public CreateNewLevelScreen(Screen screen) {
-        super("Generate new level");
+        super(Language.translate("generateLevel.title"));
         this.parent = screen;
     }
 
     public void init() {
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4, 200, 20, "Small", button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4, 200, 20, Language.translate("generateLevel.world_size.small"), button -> {
             this.generateWorld(0);
         }));
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 24, 200, 20, "Normal", button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 24, 200, 20, Language.translate("generateLevel.world_size.normal"), button -> {
             this.generateWorld(1);
         }));
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 48, 200, 20, "Huge", button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 48, 200, 20, Language.translate("generateLevel.world_size.huge"), button -> {
             this.generateWorld(2);
         }));
 
-        gameModeBtn = new ButtonWidget(this.width / 2 - 100, this.height / 4 + 72, 200, 20, "Game Mode: " + (isCreative ? "Creative" : "Survival"), button -> {
+        gameModeBtn = new ButtonWidget(this.width / 2 - 100, this.height / 4 + 72, 200, 20, Language.translate("generateLevel.gamemode") + ": " + (isCreative ? Language.translate("generateLevel.gamemode.creative") : Language.translate("generateLevel.gamemode.survival")), button -> {
             isCreative = !isCreative;
-            gameModeBtn.setMessage("Game Mode: " + (isCreative ? "Creative" : "Survival"));
+            gameModeBtn.setMessage(Language.translate("generateLevel.gamemode") + ": " + (isCreative ? Language.translate("generateLevel.gamemode.creative") : Language.translate("generateLevel.gamemode.survival")));
         });
 
         this.addWidget(gameModeBtn);
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 120, 200, 20, "Cancel", button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 120, 200, 20, Language.translate("gui.cancel"), button -> {
             this.minecraft.openScreen(this.parent);
         }));
     }

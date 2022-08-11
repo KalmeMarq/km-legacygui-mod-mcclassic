@@ -3,6 +3,7 @@ package me.kalmemarq.legacygui.gui.screen;
 import com.mojang.minecraft.Options;
 import com.mojang.minecraft.gui.Screen;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
+import me.kalmemarq.legacygui.util.Language;
 import org.lwjgl.input.Keyboard;
 
 public class KeybindScreen extends ExtraScreen {
@@ -12,7 +13,7 @@ public class KeybindScreen extends ExtraScreen {
     private int selected = -1;
 
     public KeybindScreen(Screen parent, Options options) {
-        super("Keybinds");
+        super(Language.translate("options.keybinds"));
         this.parent = parent;
         this.options  = options;
     }
@@ -29,7 +30,7 @@ public class KeybindScreen extends ExtraScreen {
             }));
         }
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168, 200, 20, "Done", button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168, 200, 20, Language.translate("gui.done"), button -> {
             this.minecraft.openScreen(this.parent);
         }));
     }

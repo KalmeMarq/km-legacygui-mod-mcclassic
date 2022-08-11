@@ -1,12 +1,10 @@
 package me.kalmemarq.legacygui.gui.screen;
 
-import com.mojang.minecraft.gui.*;
 import com.mojang.minecraft.renderer.Tesselator;
-import com.mojang.minecraft.renderer.model.CreeperModel;
 import com.mojang.minecraft.util.Mth;
-import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
 import me.kalmemarq.legacygui.util.GlConst;
+import me.kalmemarq.legacygui.util.Language;
 import me.kalmemarq.legacygui.util.RenderHelper;
 import me.kalmemarq.legacygui.util.SplashManager;
 import org.lwjgl.opengl.GL11;
@@ -18,6 +16,7 @@ public class TitleScreen extends ExtraScreen {
     private static final String COPYRIGHT = "Copyright Mojang AB. Do not distribute!";
     private int copyrightWidth;
     public static boolean showF3 = false;
+    public static boolean hideHud = false;
     private String splash;
     private final boolean showMinceraft;
     private final boolean showLegacyTitle;
@@ -35,19 +34,19 @@ public class TitleScreen extends ExtraScreen {
 
         copyrightWidth = this.font.width(COPYRIGHT);
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45, 200, 20, "Singleplayer", (button) -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45, 200, 20, Language.translate("menu.singleplayer"), (button) -> {
             this.minecraft.openScreen(new CreateNewLevelScreen(this));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 24, 200, 20, "Multiplayer", (button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 24, 200, 20, Language.translate("menu.multiplayer"), (button -> {
             this.minecraft.openScreen(new MultiplayerScreen(this));
         })));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 48, 98, 20, "Options...", (button) -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 48, 98, 20, Language.translate("menu.options"), (button) -> {
             this.minecraft.openScreen(new OptionsScreen(this, this.minecraft.options));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 + 2, this.height / 4 + 45 + 48, 98, 20, "Quit Game", (button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 + 2, this.height / 4 + 45 + 48, 98, 20, Language.translate("menu.quit"), (button -> {
             this.minecraft.destroy();
             System.exit(0);
         })));
@@ -69,14 +68,14 @@ public class TitleScreen extends ExtraScreen {
             drawTexture("assets/kmlegacygui/textures/gui/cobblestone_title.png", titleX, 30, 245, 40, 0, 0, 245, 40, 256, 64);
         } else {
             if (showMinceraft) {
-                drawTexture("minecraft.png", titleX, 30, 99, 44, 0, 0, 99, 44, 256, 256);
-                drawTexture("minecraft.png", titleX + 99, 30, 27, 44, 129, 0, 27, 44, 256, 256);
-                drawTexture("minecraft.png", titleX + 99 + 26, 30, 3, 44, 126, 0, 3, 44, 256, 256);
-                drawTexture("minecraft.png", titleX + 99 + 26 + 3, 30, 26, 44, 99, 0, 26, 44, 256, 256);
-                drawTexture("minecraft.png", titleX + 155, 30, 155, 44, 0, 45, 155, 44, 256, 256);
+                drawTexture("assets/kmlegacygui/textures/gui/minecraft.png", titleX, 30, 99, 44, 0, 0, 99, 44, 256, 256);
+                drawTexture("assets/kmlegacygui/textures/gui/minecraft.png", titleX + 99, 30, 27, 44, 129, 0, 27, 44, 256, 256);
+                drawTexture("assets/kmlegacygui/textures/gui/minecraft.png", titleX + 99 + 26, 30, 3, 44, 126, 0, 3, 44, 256, 256);
+                drawTexture("assets/kmlegacygui/textures/gui/minecraft.png", titleX + 99 + 26 + 3, 30, 26, 44, 99, 0, 26, 44, 256, 256);
+                drawTexture("assets/kmlegacygui/textures/gui/minecraft.png", titleX + 155, 30, 155, 44, 0, 45, 155, 44, 256, 256);
             } else {
-                drawTexture("minecraft.png", titleX, 30, 155, 44, 0, 0, 155, 44, 256, 256);
-                drawTexture("minecraft.png", titleX + 155, 30, 155, 44, 0, 45, 155, 44, 256, 256);
+                drawTexture("assets/kmlegacygui/textures/gui/minecraft.png", titleX, 30, 155, 44, 0, 0, 155, 44, 256, 256);
+                drawTexture("assets/kmlegacygui/textures/gui/minecraft.png", titleX + 155, 30, 155, 44, 0, 45, 155, 44, 256, 256);
             }
         }
 
