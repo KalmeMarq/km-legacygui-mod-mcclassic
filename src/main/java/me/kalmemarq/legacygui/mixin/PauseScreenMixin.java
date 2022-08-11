@@ -3,7 +3,7 @@ package me.kalmemarq.legacygui.mixin;
 import com.mojang.minecraft.gui.Button;
 import com.mojang.minecraft.gui.PauseScreen;
 import com.mojang.minecraft.gui.Screen;
-import me.kalmemarq.legacygui.TitleScreen;
+import me.kalmemarq.legacygui.gui.screen.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class PauseScreenMixin extends Screen {
     @Inject(method = "init", at = @At("TAIL"))
     private void init(CallbackInfo ci) {
-//        this.buttons.add(new Button(200, this.width / 2 - 100, this.height / 4 + 96, "Quit to title"));
+        this.buttons.add(new Button(200, this.width / 2 - 100, this.height / 4 + 96, "Quit to title"));
     }
 
     @Inject(method = "buttonClicked", at = @At("TAIL"))

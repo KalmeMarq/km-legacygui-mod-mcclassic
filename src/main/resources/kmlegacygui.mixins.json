@@ -4,11 +4,12 @@
   "package": "me.kalmemarq.legacygui.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "MinecraftAccessor"
+    "MinecraftAccessor",
+    "TileMixin"
   ],
   "client": [
-    "PlayerMixin",
     "ControlsScreenMixin",
+    "CreativeModeMixin",
     "InGameHudMixin",
     "LoadLevelScreenMixin",
     "MinecraftMixin",
@@ -16,7 +17,9 @@
     "OptionsInputMixin",
     "OptionsScreenMixin",
     "PauseScreenMixin",
-    "SaveLevelScreenMixin"
+    "PlayerMixin",
+    "SaveLevelScreenMixin",
+    "ScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

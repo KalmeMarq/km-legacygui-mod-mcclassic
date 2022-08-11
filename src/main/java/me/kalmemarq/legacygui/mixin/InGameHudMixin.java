@@ -3,7 +3,7 @@ package me.kalmemarq.legacygui.mixin;
 import com.mojang.minecraft.Entity;
 import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.gui.InGameHud;
-import me.kalmemarq.legacygui.TitleScreen;
+import me.kalmemarq.legacygui.gui.screen.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

@@ -6,7 +6,7 @@ import com.mojang.minecraft.gui.NewLevelScreen;
 import com.mojang.minecraft.gui.Screen;
 import com.mojang.minecraft.renderer.Tesselator;
 import me.kalmemarq.legacygui.SurvivalMode;
-import me.kalmemarq.legacygui.TitleScreen;
+import me.kalmemarq.legacygui.gui.screen.TitleScreen;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -36,6 +36,7 @@ public class NewLevelScreenMixin extends Screen {
         } else if (button.id == 3) {
             this.minecraft.openScreen(this.parent);
         } else {
+            TitleScreen.isInGame = true;
             this.minecraft.gameMode = isCreative ? new CreativeMode(this.minecraft) : new SurvivalMode(this.minecraft);
             this.minecraft.generateNewLevel(button.id);
             this.minecraft.openScreen((Screen)null);
