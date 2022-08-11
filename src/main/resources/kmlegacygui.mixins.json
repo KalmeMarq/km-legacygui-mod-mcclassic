@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.kalmemarq.legacygui.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MinecraftAccessor"
+  ],
+  "client": [
+    "PlayerMixin",
+    "ControlsScreenMixin",
+    "InGameHudMixin",
+    "LoadLevelScreenMixin",
+    "MinecraftMixin",
+    "NewLevelScreenMixin",
+    "OptionsInputMixin",
+    "OptionsScreenMixin",
+    "PauseScreenMixin",
+    "SaveLevelScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
