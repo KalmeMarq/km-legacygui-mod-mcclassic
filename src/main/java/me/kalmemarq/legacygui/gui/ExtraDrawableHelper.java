@@ -2,6 +2,7 @@ package me.kalmemarq.legacygui.gui;
 
 import com.mojang.minecraft.gui.DrawableHelper;
 import com.mojang.minecraft.renderer.Tesselator;
+import me.kalmemarq.legacygui.util.GlConst;
 import org.lwjgl.opengl.GL11;
 
 public class ExtraDrawableHelper extends DrawableHelper {
@@ -34,10 +35,10 @@ public class ExtraDrawableHelper extends DrawableHelper {
         float var10 = (float)(color2 >> 16 & 255) / 255.0F;
         float var11 = (float)(color2 >> 8 & 255) / 255.0F;
         int col2 = (int) ((float)(color2 & 255) / 255.0F);
-        GL11.glDisable(3553);
-        GL11.glEnable(3042);
-        GL11.glBlendFunc(770, 771);
-        GL11.glBegin(7);
+        GL11.glDisable(GlConst.GL_TEXTURE_2D);
+        GL11.glEnable(GlConst.GL_BLEND);
+        GL11.glBlendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glBegin(GlConst.GL_QUADS);
         GL11.glColor4f(var7, var8, col1, var6);
         GL11.glVertex3f((float)x1, (float)y0, z);
         GL11.glVertex3f((float)x0, (float)y0, z);
@@ -45,22 +46,22 @@ public class ExtraDrawableHelper extends DrawableHelper {
         GL11.glVertex3f((float)x0, (float)y1, z);
         GL11.glVertex3f((float)x1, (float)y1, z);
         GL11.glEnd();
-        GL11.glDisable(3042);
-        GL11.glEnable(3553);
+        GL11.glDisable(GlConst.GL_BLEND);
+        GL11.glEnable(GlConst.GL_TEXTURE_2D);
     }
 
     public static void fillGradientX(int x0, int y0, int x1, int y1, int z, int colorStart, int colorEnd) {
-        GL11.glDisable(3553);
-        GL11.glEnable(3042);
-        GL11.glBlendFunc(770, 771);
+        GL11.glDisable(GlConst.GL_TEXTURE_2D);
+        GL11.glEnable(GlConst.GL_BLEND);
+        GL11.glBlendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE_MINUS_SRC_ALPHA);
 
         Tesselator tesselator = Tesselator.instance;
         tesselator.begin();
         fillGradientX(tesselator, x0, y0, x1, y1, z, colorStart, colorEnd);
         tesselator.end();
 
-        GL11.glDisable(3042);
-        GL11.glEnable(3553);
+        GL11.glDisable(GlConst.GL_BLEND);
+        GL11.glEnable(GlConst.GL_TEXTURE_2D);
     }
 
     public static void fillGradientX(Tesselator tesselator, int x0, int y0, int x1, int y1, int z, int colorStart, int colorEnd) {
@@ -94,9 +95,9 @@ public class ExtraDrawableHelper extends DrawableHelper {
         float sB = ((float)(color & 255) / 255.0F);
 
         Tesselator tesselator = Tesselator.instance;
-        GL11.glEnable(3042);
-        GL11.glDisable(3553);
-        GL11.glBlendFunc(770, 771);
+        GL11.glEnable(GlConst.GL_BLEND);
+        GL11.glDisable(GlConst.GL_TEXTURE_2D);
+        GL11.glBlendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE_MINUS_SRC_ALPHA);
 
         tesselator.begin();
         tesselator.color(sR, sG, sB);
@@ -111,7 +112,7 @@ public class ExtraDrawableHelper extends DrawableHelper {
         tesselator.color(sR, sG, sB);
         tesselator.vertex(x0, y0, 0);
         tesselator.end();
-        GL11.glEnable(3553);
-        GL11.glDisable(3042);
+        GL11.glEnable(GlConst.GL_TEXTURE_2D);
+        GL11.glDisable(GlConst.GL_BLEND);
     }
 }

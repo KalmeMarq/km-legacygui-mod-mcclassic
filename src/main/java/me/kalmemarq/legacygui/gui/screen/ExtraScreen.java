@@ -3,7 +3,10 @@ package me.kalmemarq.legacygui.gui.screen;
 import com.mojang.minecraft.gui.DrawableHelper;
 import com.mojang.minecraft.gui.Screen;
 import com.mojang.minecraft.renderer.Tesselator;
+import me.kalmemarq.legacygui.gui.component.AbstractWidget;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
+import me.kalmemarq.legacygui.gui.component.EditTextWidget;
+import me.kalmemarq.legacygui.util.GlConst;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -12,7 +15,7 @@ import java.util.List;
 
 public abstract class ExtraScreen extends Screen {
     protected String title = "";
-    protected List<ButtonWidget> widgets = new ArrayList<>();
+    protected List<AbstractWidget> widgets = new ArrayList<>();
 
     public ExtraScreen() {
         this("");
@@ -25,16 +28,34 @@ public abstract class ExtraScreen extends Screen {
 
     @Override
     protected void mouseClicked(int x, int y, int button) {
-        for (ButtonWidget widget : widgets) {
+        for (AbstractWidget widget : widgets) {
+            if (widget instanceof EditTextWidget) {
+                ((EditTextWidget) widget).selected = false;
+            }
+        }
+
+        for (AbstractWidget widget : widgets) {
             if (widget.mouseClicked(x, y, button)) {
+                if (widget instanceof EditTextWidget) {
+                    ((EditTextWidget) widget).selected = true;
+                }
                 return;
             }
         }
     }
 
     protected boolean keyPressedX(char key, int code) {
+        for (AbstractWidget widget : this.widgets) {
+            if (widget instanceof EditTextWidget) {
+                if (((EditTextWidget)widget).selected) {
+                    if (((EditTextWidget)(widget)).keyPressed(key, code)) {
+                        return true;
+                    }
+                }
+            }
+        }
         if (code == Keyboard.KEY_ESCAPE) {
-            if (TitleScreen.isInGame) {
+            if (this.minecraft.level != null) {
                 this.minecraft.openScreen(null);
             } else {
                 this.minecraft.openScreen(new TitleScreen());
@@ -50,20 +71,30 @@ public abstract class ExtraScreen extends Screen {
         this.keyPressedX(c, key);
     }
 
-    public ButtonWidget addWidget(ButtonWidget widget) {
+    public <T extends AbstractWidget> T addWidget(T widget) {
         this.widgets.add(widget);
         return widget;
     }
 
     @Override
+    public void close() {
+        super.close();
+        Keyboard.enableRepeatEvents(false);
+    }
+
+    public boolean canBeClosed() {
+        return true;
+    }
+
+    @Override
     public void render(int mouseX, int mouseY) {
-        for (ButtonWidget widget : widgets) {
+        for (AbstractWidget widget : widgets) {
             widget.render(this.minecraft, mouseX, mouseY);
         }
     }
 
     public void renderBackground() {
-        if (TitleScreen.isInGame) {
+        if (this.minecraft.level != null) {
             renderGradientBackground();
         } else {
             renderDirtBackground();
@@ -71,7 +102,7 @@ public abstract class ExtraScreen extends Screen {
     }
 
     public void renderGradientBackground() {
-        fillGradient(0, 0, this.width, this.height, -1072689136, -804253680);
+        fillGradient(0, 0, this.width, this.height, 0xC0101010, 0xD0101010);
     }
 
     public void renderDirtBackground() {
@@ -80,7 +111,7 @@ public abstract class ExtraScreen extends Screen {
 
         Tesselator var4 = Tesselator.instance;
         int var5 = this.minecraft.textures.getTextureId("/dirt.png");
-        GL11.glBindTexture(3553, var5);
+        GL11.glBindTexture(GlConst.GL_TEXTURE_2D, var5);
         float var9 = 32.0F;
         var4.begin();
         var4.color(4210752);

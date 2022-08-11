@@ -41,7 +41,6 @@ public class CreateNewLevelScreen extends ExtraScreen {
     }
 
     private void generateWorld(int id) {
-        TitleScreen.isInGame = true;
         this.minecraft.gameMode = isCreative ? new CreativeMode(this.minecraft) : new SurvivalMode(this.minecraft);
         this.minecraft.generateNewLevel(id);
         this.minecraft.openScreen((Screen)null);
@@ -60,7 +59,7 @@ public class CreateNewLevelScreen extends ExtraScreen {
 
     public final void render(int mouseX, int mouseY) {
         this.renderBackground();
-        drawCenteredString(this.font, this.title, this.width / 2, 40, 16777215);
+        drawCenteredString(this.font, this.title, this.width / 2, 40, 0xFFFFFF);
         super.render(mouseX, mouseY);
     }
 }

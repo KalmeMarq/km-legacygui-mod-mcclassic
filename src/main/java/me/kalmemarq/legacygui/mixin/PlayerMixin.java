@@ -33,7 +33,7 @@ public class PlayerMixin extends Mob {
     public void aiStep(CallbackInfo ci) {
         this.inventory.tick();
         this.oBob = this.bob;
-        this.input.a();
+        this.input.tick();
         super.aiStep();
         float var1 = Mth.sqrt(this.xd * this.xd + this.zd * this.zd);
         float var2 = (float)Math.atan((double)(-this.yd * 0.2F)) * 15.0F;

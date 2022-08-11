@@ -2,26 +2,46 @@ package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.gui.*;
 import com.mojang.minecraft.renderer.Tesselator;
+import com.mojang.minecraft.renderer.model.CreeperModel;
+import com.mojang.minecraft.util.Mth;
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
+import me.kalmemarq.legacygui.util.GlConst;
+import me.kalmemarq.legacygui.util.RenderHelper;
+import me.kalmemarq.legacygui.util.SplashManager;
 import org.lwjgl.opengl.GL11;
+
+import java.util.Random;
 
 
 public class TitleScreen extends ExtraScreen {
+    private static final String COPYRIGHT = "Copyright Mojang AB. Do not distribute!";
+    private int copyrightWidth;
     public static boolean showF3 = false;
-    public static boolean isInGame = true;
+    private String splash;
+    private final boolean showMinceraft;
+    private final boolean showLegacyTitle;
+
+    public TitleScreen() {
+        this.showMinceraft = new Random().nextFloat() < 0.09f;
+        this.showLegacyTitle = new Random().nextFloat() < 0.06f;
+    }
 
     @Override
     public void init() {
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45, 200, 20, "Create New Level", (button) -> {
+        if (this.splash == null) {
+            this.splash = SplashManager.getRandom();
+        }
+
+        copyrightWidth = this.font.width(COPYRIGHT);
+
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45, 200, 20, "Singleplayer", (button) -> {
             this.minecraft.openScreen(new CreateNewLevelScreen(this));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 24, 200, 20, "Custom screen", (button -> {
-            this.minecraft.openScreen(new CustomScreen(this));
-        }), (button, mouseX, mouseY) -> {
-            this.drawTooltip("Custom screen with extra screen class", mouseX, mouseY);
-        }));
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 24, 200, 20, "Multiplayer", (button -> {
+            this.minecraft.openScreen(new MultiplayerScreen(this));
+        })));
 
         this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 48, 98, 20, "Options...", (button) -> {
             this.minecraft.openScreen(new OptionsScreen(this, this.minecraft.options));
@@ -34,21 +54,52 @@ public class TitleScreen extends ExtraScreen {
     }
 
     @Override
+    public boolean canBeClosed() {
+        return false;
+    }
+
+    @Override
     public void render(int mouseX, int mouseY) {
         this.renderDirtBackground();
 
         int titleX = this.width / 2 - 137;
-        drawTexture("minecraft.png", titleX, 30, 155, 44, 0, 0, 155, 44, 256, 256);
-        drawTexture("minecraft.png", titleX + 155, 30, 155, 44, 0, 45, 155, 44, 256, 256);
 
-        drawString(this.font, "Minecraft c0.30", 1, 1, 0x999999);
+        if (showLegacyTitle) {
+            titleX = this.width / 2 - 245 / 2;
+            drawTexture("assets/kmlegacygui/textures/gui/cobblestone_title.png", titleX, 30, 245, 40, 0, 0, 245, 40, 256, 64);
+        } else {
+            if (showMinceraft) {
+                drawTexture("minecraft.png", titleX, 30, 99, 44, 0, 0, 99, 44, 256, 256);
+                drawTexture("minecraft.png", titleX + 99, 30, 27, 44, 129, 0, 27, 44, 256, 256);
+                drawTexture("minecraft.png", titleX + 99 + 26, 30, 3, 44, 126, 0, 3, 44, 256, 256);
+                drawTexture("minecraft.png", titleX + 99 + 26 + 3, 30, 26, 44, 99, 0, 26, 44, 256, 256);
+                drawTexture("minecraft.png", titleX + 155, 30, 155, 44, 0, 45, 155, 44, 256, 256);
+            } else {
+                drawTexture("minecraft.png", titleX, 30, 155, 44, 0, 0, 155, 44, 256, 256);
+                drawTexture("minecraft.png", titleX + 155, 30, 155, 44, 0, 45, 155, 44, 256, 256);
+            }
+        }
+
+        drawString(this.font, "Minecraft c0.30", 1, 1, 0xAAAAAA);
+        drawString(this.font, COPYRIGHT, this.width - this.copyrightWidth - 1, this.height - 10, 0xAAAAAA);
+
+        GL11.glPushMatrix();
+        GL11.glTranslatef((this.width / 2 + 90), 70.0f, 0.0f);
+        GL11.glRotated(360 - 20, 0, 0, 0.01);
+
+        float scale = 1.8F - Math.abs(Mth.sin((float) (System.currentTimeMillis() % 1000L) / 1000.0F * 6.2831855F) * 0.1F);
+        scale = scale * 100.0F / (float) (this.font.width(this.splash) + 32);
+        int textWidth = this.font.width(this.splash);
+
+        GL11.glScalef(scale, scale, 0);
+        drawString(this.font, this.splash, -textWidth / 2, -8, 0xfff717);
+        GL11.glPopMatrix();
 
         super.render(mouseX, mouseY);
     }
 
     private void drawTexture(String name, int x, int y, int width, int height, int u, int v, int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
-        int id = this.minecraft.textures.getTextureId("/" + name);
-        GL11.glBindTexture(3553, id);
+        RenderHelper.bindTexture(this.minecraft, "/" + name);
 
         int x0 = x;
         int x1 = x + width;
@@ -108,10 +159,10 @@ public class TitleScreen extends ExtraScreen {
             GL11.glTranslatef(0, 0, z);
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            GL11.glBegin(GL11.GL_QUADS);
+            GL11.glDisable(GlConst.GL_TEXTURE_2D);
+            GL11.glEnable(GlConst.GL_BLEND);
+            GL11.glBlendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE_MINUS_SRC_ALPHA);
+            GL11.glBegin(GlConst.GL_QUADS);
             fillGradient(var23 - 3, var24 - 4, var23 + maxWidth + 3, var24 - 3, 0,-267386864, -267386864);
             fillGradient(var23 - 3, var24 + var6 + 3, var23 + maxWidth + 3, var24 + var6 + 4, 0, -267386864, -267386864);
             fillGradient(var23 - 3, var24 - 3, var23 + maxWidth + 3, var24 + var6 + 3, 0,-267386864, -267386864);
@@ -122,8 +173,8 @@ public class TitleScreen extends ExtraScreen {
             fillGradient(var23 - 3, var24 - 3, var23 + maxWidth + 3, var24 - 3 + 1, 0,1347420415, 1347420415);
             fillGradient(var23 - 3, var24 + var6 + 2, var23 + maxWidth + 3, var24 + var6 + 3, 0,1344798847, 1344798847);
             GL11.glEnd();
-            GL11.glDisable(GL11.GL_BLEND);
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glDisable(GlConst.GL_BLEND);
+            GL11.glEnable(GlConst.GL_TEXTURE_2D);
 
             int x00 = var23;
             int y00 = var24;

@@ -10,29 +10,29 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(OptionsInput.class)
 public class OptionsInputMixin extends Input {
-    @Shadow private boolean[] d;
+    @Shadow private boolean[] keys;
 
-    @Inject(method = "a()V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void a(CallbackInfo ci) {
-        this.a = 0.0F;
-        this.b = 0.0F;
-        if (this.d[0]) {
-            --this.b;
+        this.xxa = 0.0F;
+        this.yya = 0.0F;
+        if (this.keys[0]) {
+            --this.yya;
         }
 
-        if (this.d[1]) {
-            ++this.b;
+        if (this.keys[1]) {
+            ++this.yya;
         }
 
-        if (this.d[2]) {
-            --this.a;
+        if (this.keys[2]) {
+            --this.xxa;
         }
 
-        if (this.d[3]) {
-            ++this.a;
+        if (this.keys[3]) {
+            ++this.xxa;
         }
 
-        this.c = this.d[4];
+        this.jumping = this.keys[4];
 
         ci.cancel();
     }

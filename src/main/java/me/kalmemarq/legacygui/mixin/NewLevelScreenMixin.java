@@ -36,7 +36,6 @@ public class NewLevelScreenMixin extends Screen {
         } else if (button.id == 3) {
             this.minecraft.openScreen(this.parent);
         } else {
-            TitleScreen.isInGame = true;
             this.minecraft.gameMode = isCreative ? new CreativeMode(this.minecraft) : new SurvivalMode(this.minecraft);
             this.minecraft.generateNewLevel(button.id);
             this.minecraft.openScreen((Screen)null);

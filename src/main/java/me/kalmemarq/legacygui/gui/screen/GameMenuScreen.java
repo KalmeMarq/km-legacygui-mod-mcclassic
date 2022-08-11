@@ -33,7 +33,12 @@ public class GameMenuScreen extends ExtraScreen {
         }));
 
         this.addWidget(new ButtonWidget(this.width / 2 - 102, this.height / 4 + 120 + -16, 204, 20, "Quit to title screen", button -> {
-            TitleScreen.isInGame = false;
+            if (this.minecraft.connectionManager != null) {
+                this.minecraft.connectionManager.connection.disconnect();
+                this.minecraft.connectionManager = null;
+            }
+
+            this.minecraft.level = null;
             this.minecraft.openScreen(new TitleScreen());
         }));
     }
