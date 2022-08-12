@@ -2,9 +2,11 @@ package me.kalmemarq.legacygui.gui.component;
 
 import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.gui.DrawableHelper;
+import me.kalmemarq.legacygui.LegacyGUIMod;
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
 import me.kalmemarq.legacygui.gui.IRenderable;
 import me.kalmemarq.legacygui.util.GlConst;
+import me.kalmemarq.legacygui.util.RenderHelper;
 import org.lwjgl.opengl.GL11;
 
 public class ButtonWidget extends AbstractWidget implements IRenderable {
@@ -32,13 +34,14 @@ public class ButtonWidget extends AbstractWidget implements IRenderable {
 
     @Override
     protected void renderButton(Minecraft mc, int mouseX, int mouseY) {
-        int id = mc.textures.getTextureId("/gui/gui.png");
-        GL11.glBindTexture(GlConst.GL_TEXTURE_2D, id);
+        LegacyGUIMod.textureManager.bind("/gui/gui.png");
+
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
         int yOff = getYOffset(this.hovered);
-        drawTexture(this.x, this.y, this.width / 2, this.height, 0, 46 + (20 * yOff), this.width / 2, 20, 256, 256);
-        drawTexture(this.x + this.width / 2, this.y, this.width / 2, this.height, 200 - this.width / 2, 46 + (20 * yOff), this.width / 2, 20, 256, 256);
+
+        ExtraDrawableHelper.drawTextureXX(this.x, this.y, 0, 46 + (20 * yOff), this.width / 2, 20);
+        ExtraDrawableHelper.drawTextureXX(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + (20 * yOff), this.width / 2, 20);
 
         int textColor = !this.active ? -6250336 : this.hovered ? 16777120 : 14737632;
         drawCenteredString(mc.font, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, textColor);

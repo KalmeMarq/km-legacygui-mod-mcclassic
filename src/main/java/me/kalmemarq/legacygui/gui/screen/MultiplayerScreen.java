@@ -65,7 +65,7 @@ public class MultiplayerScreen extends ExtraScreen {
             }
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168, 200, 20, Language.translate("gui.done"), (button) -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168, 200, 20, Language.translate("gui.cancel"), (button) -> {
             this.minecraft.openScreen(this.parent);
         }));
     }

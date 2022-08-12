@@ -1,0 +1,20 @@
+{
+    "language": {
+        "en_gb": {
+            "name": "English",
+            "region": "UK"
+        },
+        "en_us": {
+            "name": "English",
+            "region": "US"
+        },
+        "pt_br": {
+            "name": "Portugues",
+            "region": "Brazil"
+        },
+        "pt_pt": {
+            "name": "Portugues",
+            "region": "Portugal"
+        }
+    }
+}

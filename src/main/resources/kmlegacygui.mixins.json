@@ -6,19 +6,21 @@
   "mixins": [
     "ErrorScreenMixin",
     "MinecraftAccessor",
-    "TileMixin"
+    "MobMixin",
+    "MinecraftMixin",
+    "OptionsMixin",
+    "OptionsInputMixin",
+    "PlayerMixin"
   ],
   "client": [
+    "TileMixin",
     "ControlsScreenMixin",
     "CreativeModeMixin",
     "InGameHudMixin",
     "LoadLevelScreenMixin",
-    "MinecraftMixin",
     "NewLevelScreenMixin",
-    "OptionsInputMixin",
     "OptionsScreenMixin",
     "PauseScreenMixin",
-    "PlayerMixin",
     "SaveLevelScreenMixin",
     "ScreenMixin"
   ],

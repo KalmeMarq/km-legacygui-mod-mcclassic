@@ -1,14 +1,10 @@
 package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.Options;
-import com.mojang.minecraft.e.c;
-import com.mojang.minecraft.gui.NarrowButton;
 import com.mojang.minecraft.gui.Screen;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
 import me.kalmemarq.legacygui.util.Language;
 import org.lwjgl.input.Keyboard;
-
-import java.util.Objects;
 
 public class OptionsScreen extends ExtraScreen {
     private final Screen parent;
@@ -33,19 +29,12 @@ public class OptionsScreen extends ExtraScreen {
 
         ++i;
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 155 + i % 2 * 160, this.height / 6 + 24 * (i >> 1), 150, 20, "Language: " + Language.language, button -> {
-            if (Objects.equals(Language.language, "en_us")) {
-                Language.language = "pt_pt";
-            } else if (Objects.equals(Language.language, "pt_pt")) {
-                Language.language = "en_us";
-            }
-            Language.load();
-            button.setMessage("Language: " + Language.language);
-            this.minecraft.openScreen(this);
-        }));
-
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 120 + 12, 200, 20, Language.translate("options.controls"), (button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 155, this.height / 6 + 120 + 12, 150, 20, Language.translate("options.controls"), (button -> {
             this.minecraft.openScreen(new KeybindScreen(this, this.options));
+        })));
+
+        this.addWidget(new ButtonWidget(this.width / 2 + 5, this.height / 6 + 120 + 12, 150, 20, Language.translate("options.language"), (button -> {
+            this.minecraft.openScreen(new LanguageScreen(this));
         })));
 
         this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168, 200, 20, Language.translate("gui.done"), (button -> {

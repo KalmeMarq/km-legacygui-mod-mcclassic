@@ -8,9 +8,12 @@ import com.mojang.minecraft.gui.PauseScreen;
 import com.mojang.minecraft.gui.Screen;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.LevelRenderer;
+import com.mojang.minecraft.player.Player;
+import me.kalmemarq.legacygui.LegacyGUIMod;
 import me.kalmemarq.legacygui.SurvivalMode;
 import me.kalmemarq.legacygui.gui.ITickable;
 import me.kalmemarq.legacygui.gui.screen.*;
+import me.kalmemarq.legacygui.util.IPlayerExtension;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,6 +37,8 @@ public abstract class MinecraftMixin {
 	@Shadow public LevelRenderer levelRenderer;
 
 	@Shadow public InGameHud hud;
+
+	@Shadow public Player player;
 
 	@Inject(at = @At("HEAD"), method = "run")
 	private void run(CallbackInfo info) {
@@ -61,6 +66,11 @@ public abstract class MinecraftMixin {
 		@Redirect(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/Minecraft;generateNewLevel(I)V"))
 	private void generateNewLevelPrevent(Minecraft instance, int i) {
 		this.openScreen(new TitleScreen());
+	}
+
+	@Inject(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/Options;<init>(Lcom/mojang/minecraft/Minecraft;Ljava/io/File;)V", shift = At.Shift.AFTER))
+	private void injectAfterOptionsLoaded(CallbackInfo ci) {
+		LegacyGUIMod.onMinecraftInitalized((Minecraft) (Object)this);
 	}
 
 	@ModifyVariable(method = "openScreen", at = @At(value = "FIELD", target = "Lcom/mojang/minecraft/Minecraft;screen:Lcom/mojang/minecraft/gui/Screen;"), argsOnly = true)
@@ -94,5 +104,23 @@ public abstract class MinecraftMixin {
 		}
 
 		ci.cancel();
+	}
+
+	@Inject(method = "tick", at = @At("HEAD"))
+	private void onTickHead(CallbackInfo info) {
+		if (this.player != null) {
+			((IPlayerExtension) player).creativeFlight_setGameMode(gameMode);
+		}
+	}
+
+	@Inject(method = "tick", at = @At("RETURN"))
+	private void onTickReturn(CallbackInfo info) {
+		if (this.player != null) {
+			IPlayerExtension ext = (IPlayerExtension) player;
+			if (ext.creativeFlight_wasFlying() != ext.creativeFlight_isFlying()) {
+				String message = ext.creativeFlight_isFlying() ? "Started flying!" : "Stopped flying!";
+				hud.addMessage(message);
+			}
+		}
 	}
 }

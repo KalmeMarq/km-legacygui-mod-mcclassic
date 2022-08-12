@@ -9,6 +9,7 @@ import me.kalmemarq.legacygui.gui.screen.CreativeInventoryScreen;
 import me.kalmemarq.legacygui.gui.screen.TitleScreen;
 import me.kalmemarq.legacygui.util.GlConst;
 import me.kalmemarq.legacygui.util.Language;
+import me.kalmemarq.legacygui.util.TileID;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -59,7 +60,7 @@ public class InGameHudMixin implements ITickable {
 //        this.minecraft.font.drawShadow("Fabric Mod in classic 0.30. what a time to be alive...", 50, 1, 0xFF00FF);
 
         if (this.toolHighlightTimer > 0 && lastToolHighlight > -1) {
-            int x = this.scaledWidth / 2 - this.minecraft.font.width(Language.translate(CreativeInventoryScreen.TileID.get(this.lastToolHighlight).getTranslationKey())) / 2;
+            int x = this.scaledWidth / 2 - this.minecraft.font.width(Language.translate(TileID.get(this.lastToolHighlight).getTranslationKey())) / 2;
             int y = this.scaledHeight - 59;
 
             if (this.minecraft.player != null) {
@@ -76,7 +77,7 @@ public class InGameHudMixin implements ITickable {
             if (textAlpha > 0) {
                 GL11.glEnable(GlConst.GL_BLEND);
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, textAlpha / 255.0f);
-                this.minecraft.font.drawShadow(Language.translate(CreativeInventoryScreen.TileID.get(this.lastToolHighlight).getTranslationKey()), x, y, 16777215);
+                this.minecraft.font.drawShadow(Language.translate(TileID.get(this.lastToolHighlight).getTranslationKey()), x, y, 16777215);
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
                 GL11.glDisable(GlConst.GL_BLEND);
             }

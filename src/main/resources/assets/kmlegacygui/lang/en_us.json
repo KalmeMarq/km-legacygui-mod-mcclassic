@@ -27,6 +27,7 @@
   "multiplayer.server_address": "Server Address",
   "options.title": "Options",
   "options.controls": "Controls...",
+  "options.language": "Language...",
   "options.keybinds": "Keybinds",
   "options.music": "Music",
   "options.sound": "Sound",
@@ -101,5 +102,6 @@
   "minecraft.tile.dirt": "Dirt",
   "minecraft.tile.grass": "Grass",
   "minecraft.tile.rock": "Rock",
-  "minecraft.tile.air": "Air"
+  "minecraft.tile.air": "Air",
+  "menu.mods": "Mods"
 }

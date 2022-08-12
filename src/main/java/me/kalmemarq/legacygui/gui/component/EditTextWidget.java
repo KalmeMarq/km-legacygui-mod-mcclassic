@@ -32,8 +32,8 @@ public class EditTextWidget extends AbstractWidget {
 
     @Override
     public void renderButton(Minecraft mc, int mouseX, int mouseY) {
-        fillX(this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, this.selected ? SELECTED_COLOR : DEFAULT_COLOR);
-        fillX(this.x, this.y, this.x + this.width, this.y + this.height, 0xFF000000);
+        fillXX(this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, this.selected ? SELECTED_COLOR : DEFAULT_COLOR);
+        fillXX(this.x, this.y, this.x + this.width, this.y + this.height, 0xFF000000);
 
         boolean bl = (ticks / 6 % 2 == 0);
 

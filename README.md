@@ -2,15 +2,17 @@
 
 ### Features
 - All screens have been reworked to resemble more recent versions
-- Translations
+- Language screen
 - F3 menu
 - F1 hide hud
 - Changed the lighting direction of the items in the hud and added selected item name.
 - Title screen
   - Splashes
   - Chance of the old cobblestone logo (1/17) or the minceraft logo (1/11) to appear
+- Mods screen
 - Multiplayer screen
 - Servers is accessible through the "Multiplayer" button in the TitleScreen
+- Creative flight (From Creative Flight by Juuxel)
 
 ![title](./title.png)
 

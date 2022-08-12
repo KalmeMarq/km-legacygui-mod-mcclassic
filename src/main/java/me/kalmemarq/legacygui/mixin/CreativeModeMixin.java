@@ -15,7 +15,7 @@ public class CreativeModeMixin extends GameMode {
         super(minecraft);
     }
 
-    @Inject(method = "a()V", at = @At("HEAD"))
+    @Inject(method = "openBuildScreen", at = @At("HEAD"))
     public void a(CallbackInfo ci) {
         this.minecraft.openScreen(new CreativeInventoryScreen());
     }
