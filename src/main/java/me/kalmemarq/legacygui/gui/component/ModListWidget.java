@@ -4,22 +4,20 @@ import com.mojang.minecraft.Minecraft;
 import me.kalmemarq.legacygui.gui.component.entries.IndependentEntry;
 import me.kalmemarq.legacygui.gui.component.entries.ModListEntry;
 import me.kalmemarq.legacygui.gui.screen.ModsScreen;
-import me.kalmemarq.legacygui.gui.screen.TestScreen;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ModListWidget extends AbstractSelectionList<ModListEntry> {
     public static final boolean DEBUG = false;
-    private final TestScreen parent;
+    private final ModsScreen parent;
     private List<ModContainer> mods = null;
     private final Set<ModContainer> addedMods = new HashSet<>();
     private String selectedModId = null;
     private boolean scrolling;
 
-    public ModListWidget(Minecraft mc, int width, int height, int y0, int y1, int itemHeight, String searchTerm, ModListWidget list, TestScreen parent) {
+    public ModListWidget(Minecraft mc, int width, int height, int y0, int y1, int itemHeight, String searchTerm, ModListWidget list, ModsScreen parent) {
         super(mc, width, height, y0, y1, itemHeight);
         this.parent = parent;
         if (list != null) {
@@ -83,7 +81,7 @@ public class ModListWidget extends AbstractSelectionList<ModListEntry> {
         return this.y0;
     }
 
-    public TestScreen getParent() {
+    public ModsScreen getParent() {
         return this.parent;
     }
 

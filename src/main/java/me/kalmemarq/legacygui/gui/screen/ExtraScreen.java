@@ -1,5 +1,6 @@
 package me.kalmemarq.legacygui.gui.screen;
 
+import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.gui.DrawableHelper;
 import com.mojang.minecraft.gui.Screen;
 import com.mojang.minecraft.renderer.Tesselator;
@@ -7,19 +8,17 @@ import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
 import me.kalmemarq.legacygui.gui.component.AbstractWidget;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
 import me.kalmemarq.legacygui.gui.component.EditTextWidget;
-import me.kalmemarq.legacygui.util.BufferBuilder;
-import me.kalmemarq.legacygui.util.ExtraTesselator;
-import me.kalmemarq.legacygui.util.GlConst;
-import me.kalmemarq.legacygui.util.RenderHelper;
+import me.kalmemarq.legacygui.util.*;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ExtraScreen extends Screen {
+public abstract class ExtraScreen extends Screen implements IScreenExtra {
     protected String title = "";
-    protected List<AbstractWidget> widgets = new ArrayList<>();
+    public List<AbstractWidget> widgets = new ArrayList<>();
+    public static int scale = 3;
 
     public ExtraScreen() {
         this("");
@@ -91,9 +90,19 @@ public abstract class ExtraScreen extends Screen {
     }
 
     @Override
+    public void resizeX(Minecraft mc, int width, int height) {
+//        this.widgets.clear();
+//        this.minecraft = mc;
+//        this.font = mc.font;
+//        this.width = width;
+//        this.height = height;
+//        this.init();
+        this.init(mc, width, height);
+    }
+
     public void render(int mouseX, int mouseY) {
         for (AbstractWidget widget : widgets) {
-            widget.render(this.minecraft, mouseX, mouseY);
+            widget.render(mouseX, mouseY);
         }
     }
 
@@ -110,7 +119,7 @@ public abstract class ExtraScreen extends Screen {
     }
 
     public void renderGradientBackground() {
-        ExtraDrawableHelper.fillGradientXX(0, 0, this.width, this.height, 0xC0101010, 0xD0101010);
+        ExtraDrawableHelper.fillGradientXX(0, 0, this.width, this.height, -1072689136, -804253680);
     }
 
     public void renderDirtBackground() {
@@ -132,11 +141,11 @@ public abstract class ExtraScreen extends Screen {
         tesselator.end();
     }
 
-    protected void drawTooltip(String text, int x, int y) {
+    protected void drawTooltip(String text, double x, double y) {
         drawTooltip(new String[]{text}, x, y);
     }
 
-    protected void drawTooltip(String[] text, int x, int y) {
+    protected void drawTooltip(String[] text, double x, double y) {
         if (text.length > 0) {
             int fontHeight = 10;
 
@@ -151,8 +160,8 @@ public abstract class ExtraScreen extends Screen {
                 }
             }
 
-            int x0 = x + 12;
-            int y0 = y - 12;
+            float x0 = (float)x + 12;
+            float y0 = (float)y - 12;
 
             if (x0 + maxWidth > this.width) {
                 x0 -= 28 + maxWidth;
@@ -163,7 +172,7 @@ public abstract class ExtraScreen extends Screen {
             }
 
             if (y - tooltipHeight - 8 < 0) {
-                y0 = y + 8;
+                y0 = (float)y + 8;
             }
 
             GL11.glPushMatrix();
@@ -192,10 +201,10 @@ public abstract class ExtraScreen extends Screen {
             RenderHelper.enableTexture();
 
             GL11.glTranslatef(0.0f, 0.0f, 100.0f);
-            int x00 = x0;
-            int y00 = y0;
+            float x00 = x0;
+            float y00 = y0;
             for (int i = 0; i < text.length; i++) {
-                this.minecraft.font.drawShadow(text[i], x00, y00, 0xFFFFFF);
+                this.minecraft.font.drawShadow(text[i], (int)x00, (int)y00, 0xFFFFFF);
                 y00 += fontHeight;
             }
 

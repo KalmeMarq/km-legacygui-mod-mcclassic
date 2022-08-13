@@ -32,4 +32,8 @@ public class GlConst {
     public final static int SRC_ALPHA = 770;
     public final static int SRC_COLOR = 768;
     public final static int ZERO = 0;
+    public final static int GL_RGB = 6407;
+    public final static int GL_PACK_ALIGNMENT = 3333;
+    public final static int GL_UNPACK_ALIGNMENT	= 3317;
+    public final static int GL_ALPHA_TEST = 3008;
 }

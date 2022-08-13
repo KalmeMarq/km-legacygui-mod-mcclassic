@@ -41,9 +41,10 @@ abstract class OptionsMixin implements IOptionsExtra {
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/Options;load()V"))
     private void onConstruct(Minecraft mc, File file, CallbackInfo info) {
         int size = keybinds.length;
-        keybinds = Arrays.copyOf(keybinds, size + 2);
+        keybinds = Arrays.copyOf(keybinds, size + 3);
         keybinds[size] = LegacyGUIMod.FLYING_KEYBIND;
         keybinds[size + 1] = LegacyGUIMod.DESCENDING_KEYBIND;
+        keybinds[size + 2] = LegacyGUIMod.PLAYERLIST_KEYBIND;
         this.loadX();
     }
 

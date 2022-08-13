@@ -43,8 +43,8 @@ public class BufferBuilder {
     private int field_2069 = 0;
     private boolean canUseVRDExt = false;
     private IntBuffer buffer;
-    private int field_2079 = 0;
-    private int field_2052 = 10;
+    private int bufferCursor = 0;
+    private final int bufferCapacity = 10;
     private boolean hasNormal = false;
 
     public BufferBuilder(int capacity) {
@@ -55,7 +55,7 @@ public class BufferBuilder {
         this.array = new int[capacity];
         this.canUseVRDExt = allowsVertexArrayData && GLContext.getCapabilities().GL_ARB_vertex_buffer_object;
         if (this.canUseVRDExt) {
-            this.buffer = ByteBuffer.allocateDirect(this.field_2052 << 2).order(ByteOrder.nativeOrder()).asIntBuffer();
+            this.buffer = ByteBuffer.allocateDirect(this.bufferCapacity << 2).order(ByteOrder.nativeOrder()).asIntBuffer();
             ARBVertexBufferObject.glGenBuffersARB(this.buffer);
         }
     }
@@ -73,8 +73,8 @@ public class BufferBuilder {
                 this.byteBuffer.limit(this.cursor * 4);
 
                 if (this.canUseVRDExt) {
-                    this.field_2079 = (this.field_2079 + 1) % this.field_2052;
-                    ARBVertexBufferObject.glBindBufferARB(GlConst.GL_ARRAY_BUFFER, this.buffer.get(this.field_2079));
+                    this.bufferCursor = (this.bufferCursor + 1) % this.bufferCapacity;
+                    ARBVertexBufferObject.glBindBufferARB(GlConst.GL_ARRAY_BUFFER, this.buffer.get(this.bufferCursor));
                     ARBVertexBufferObject.glBufferDataARB(GlConst.GL_ARRAY_BUFFER, this.byteBuffer, 35040);
                 }
 
@@ -197,10 +197,10 @@ public class BufferBuilder {
     public BufferBuilder color(int r, int g, int b, int a) {
         if (!this.noColor) {
 
-//            r = MathHelper.clamp(r, 0, 255);
-//            g = MathHelper.clamp(g, 0, 255);
-//            b = MathHelper.clamp(b, 0, 255);
-//            a = MathHelper.clamp(a, 0, 255);
+            r = MathHelper.clamp(r, 0, 255);
+            g = MathHelper.clamp(g, 0, 255);
+            b = MathHelper.clamp(b, 0, 255);
+            a = MathHelper.clamp(a, 0, 255);
 
             this.hasColor = true;
 
@@ -228,7 +228,7 @@ public class BufferBuilder {
                     this.array[this.cursor + 5] = this.array[this.cursor - var8 + 5];
                 }
 
-                this.array[this.cursor + 0] = this.array[this.cursor - var8 + 0];
+                this.array[this.cursor] = this.array[this.cursor - var8];
                 this.array[this.cursor + 1] = this.array[this.cursor - var8 + 1];
                 this.array[this.cursor + 2] = this.array[this.cursor - var8 + 2];
                 ++this.vertices;
@@ -249,7 +249,7 @@ public class BufferBuilder {
             this.array[this.cursor + 6] = this._normal;
         }
 
-        this.array[this.cursor + 0] = Float.floatToRawIntBits((float)(_x + this.field_2072));
+        this.array[this.cursor] = Float.floatToRawIntBits((float)(_x + this.field_2072));
         this.array[this.cursor + 1] = Float.floatToRawIntBits((float)(_y + this.field_2073));
         this.array[this.cursor + 2] = Float.floatToRawIntBits((float)(_z + this.field_2074));
         this.cursor += 8;

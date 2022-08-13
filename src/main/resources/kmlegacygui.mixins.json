@@ -5,15 +5,19 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ErrorScreenMixin",
+    "FontAccessor",
+    "GameRendererMixin",
+    "LevelLoaderAcessor",
+    "LevelLoaderListenerMixin",
     "MinecraftAccessor",
-    "MobMixin",
+    "MinecraftAppletMixin",
     "MinecraftMixin",
-    "OptionsMixin",
+    "MobMixin",
     "OptionsInputMixin",
+    "OptionsMixin",
     "PlayerMixin"
   ],
   "client": [
-    "TileMixin",
     "ControlsScreenMixin",
     "CreativeModeMixin",
     "InGameHudMixin",
@@ -22,7 +26,8 @@
     "OptionsScreenMixin",
     "PauseScreenMixin",
     "SaveLevelScreenMixin",
-    "ScreenMixin"
+    "ScreenMixin",
+    "TileMixin"
   ],
   "injectors": {
     "defaultRequire": 1

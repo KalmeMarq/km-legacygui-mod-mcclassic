@@ -24,14 +24,14 @@ public abstract class AbstractWidget extends ExtraDrawableHelper {
         this.message = title;
     }
 
-    public void render(Minecraft mc, int mouseX, int mouseY) {
+    public void render(int mouseX, int mouseY) {
         if (this.visible) {
             this.hovered = mouseX > this.x && mouseX < this.x + this.width && mouseY > this.y && mouseY < this.y + this.height;
-            this.renderButton(mc, mouseX, mouseY);
+            this.renderButton(mouseX, mouseY);
         }
     }
 
-    protected void renderButton(Minecraft mc, int mouseX, int mouseY) {
+    protected void renderButton(int mouseX, int mouseY) {
     }
 
     public boolean mouseClicked(int mouseX, int mouseY, int button) {

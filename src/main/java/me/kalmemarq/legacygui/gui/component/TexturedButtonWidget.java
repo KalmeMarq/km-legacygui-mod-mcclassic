@@ -40,14 +40,14 @@ public class TexturedButtonWidget extends ButtonWidget {
     }
 
     @Override
-    protected void renderButton(Minecraft mc, int mouseX, int mouseY) {
+    protected void renderButton(int mouseX, int mouseY) {
 
         int vOff = this.yTexStart;
         if (this.hovered) {
             vOff += this.yDiffTex;
         }
 
-        RenderHelper.bindTexture(mc, "/" + this.location);
+        RenderHelper.bindTexture("/" + this.location);
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
         drawTextureXX(this.x, this.y, xTexStart, vOff, this.width, this.height, this.textureWidth, this.textureHeight);

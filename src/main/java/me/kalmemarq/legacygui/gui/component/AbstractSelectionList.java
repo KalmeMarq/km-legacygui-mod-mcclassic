@@ -2,10 +2,7 @@ package me.kalmemarq.legacygui.gui.component;
 
 import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.renderer.Tesselator;
-import com.mojang.minecraft.util.Mth;
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
-import me.kalmemarq.legacygui.gui.IRenderable;
-import me.kalmemarq.legacygui.gui.screen.TestScreen;
 import me.kalmemarq.legacygui.util.*;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
@@ -122,7 +119,7 @@ public class AbstractSelectionList<E extends AbstractSelectionList.Entry<E>> ext
     protected void renderHeader(int leftRowX0, int var3, Tesselator var4) {
     }
 
-    public void render(Minecraft mc, int mouseX, int mouseY) {
+    public void render(int mouseX, int mouseY) {
         this.renderBackground();
 
         int scrollBarX0 = this.getScrollbarPosition();
@@ -133,7 +130,7 @@ public class AbstractSelectionList<E extends AbstractSelectionList.Entry<E>> ext
 
         this.hovered = this.isMouseOver((double)mouseX, (double)mouseY) ? this.getEntryAtPosition((double)mouseX, (double)mouseY) : null;
         if (this.renderBackground) {
-            RenderHelper.bindTexture(mc, "/gui/options_background.png");
+            RenderHelper.bindTexture("/gui/options_background.png");
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
             builder.begin(GlConst.GL_QUADS);

@@ -10,6 +10,8 @@
   - Splashes
   - Chance of the old cobblestone logo (1/17) or the minceraft logo (1/11) to appear
 - Mods screen
+- Screenshots
+- Texture packs
 - Multiplayer screen
 - Servers is accessible through the "Multiplayer" button in the TitleScreen
 - Creative flight (From Creative Flight by Juuxel)

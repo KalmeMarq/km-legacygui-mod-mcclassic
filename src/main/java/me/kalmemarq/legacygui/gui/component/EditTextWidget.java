@@ -1,6 +1,8 @@
 package me.kalmemarq.legacygui.gui.component;
 
 import com.mojang.minecraft.Minecraft;
+import me.kalmemarq.legacygui.LegacyGUIMod;
+import me.kalmemarq.legacygui.util.TextRenderer;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
@@ -31,18 +33,20 @@ public class EditTextWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderButton(Minecraft mc, int mouseX, int mouseY) {
+    public void renderButton(int mouseX, int mouseY) {
+        Minecraft mc = LegacyGUIMod.getMCInstance();
+
         fillXX(this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, this.selected ? SELECTED_COLOR : DEFAULT_COLOR);
         fillXX(this.x, this.y, this.x + this.width, this.y + this.height, 0xFF000000);
 
         boolean bl = (ticks / 6 % 2 == 0);
 
         if (!this.text.isEmpty()) {
-            drawString(mc.font, this.text + (bl && this.selected ? "_" : ""), this.x + 5, this.y + (this.height - 8) / 2, 0xFFFFFF);
+            drawStringShadow(this.text + (bl && this.selected ? "_" : ""), this.x + 5, this.y + (this.height - 8) / 2, 0xFFFFFF);
         } else if (this.selected) {
-            drawString(mc.font, "" + (bl ? "_" : ""), this.x + 5, this.y + (this.height - 8) / 2, 0xFFFFFF);
+            drawStringShadow("" + (bl ? "_" : ""), this.x + 5, this.y + (this.height - 8) / 2, 0xFFFFFF);
         } else {
-            drawString(mc.font, this.placeholder, this.x + 5, this.y + (this.height - 8) / 2, 0x777777);
+            drawStringShadow(this.placeholder, this.x + 5, this.y + (this.height - 8) / 2, 0x777777);
         }
     }
 

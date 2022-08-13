@@ -33,18 +33,18 @@ public class ButtonWidget extends AbstractWidget implements IRenderable {
     }
 
     @Override
-    protected void renderButton(Minecraft mc, int mouseX, int mouseY) {
+    protected void renderButton(int mouseX, int mouseY) {
         LegacyGUIMod.textureManager.bind("/gui/gui.png");
 
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
         int yOff = getYOffset(this.hovered);
 
-        ExtraDrawableHelper.drawTextureXX(this.x, this.y, 0, 46 + (20 * yOff), this.width / 2, 20);
-        ExtraDrawableHelper.drawTextureXX(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + (20 * yOff), this.width / 2, 20);
+        drawTextureXX(this.x, this.y, 0, 46 + (20 * yOff), this.width / 2, 20);
+        drawTextureXX(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + (20 * yOff), this.width / 2, 20);
 
         int textColor = !this.active ? -6250336 : this.hovered ? 16777120 : 14737632;
-        drawCenteredString(mc.font, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, textColor);
+        drawCenteredString(this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, textColor);
 
         if (this.hovered) {
             this.renderToolTip(mouseX, mouseY);

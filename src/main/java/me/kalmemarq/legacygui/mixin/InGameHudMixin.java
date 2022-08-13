@@ -6,10 +6,9 @@ import com.mojang.minecraft.gui.InGameHud;
 import com.mojang.minecraft.item.Item;
 import me.kalmemarq.legacygui.gui.ITickable;
 import me.kalmemarq.legacygui.gui.screen.CreativeInventoryScreen;
+import me.kalmemarq.legacygui.gui.screen.ExtraScreen;
 import me.kalmemarq.legacygui.gui.screen.TitleScreen;
-import me.kalmemarq.legacygui.util.GlConst;
-import me.kalmemarq.legacygui.util.Language;
-import me.kalmemarq.legacygui.util.TileID;
+import me.kalmemarq.legacygui.util.*;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,6 +29,9 @@ public class InGameHudMixin implements ITickable {
 
     @Inject(method = "render", at = @At(value = "HEAD"), cancellable = true)
     private void renderHidHud(float hasScreen, boolean mouseX, int mouseY, int par4, CallbackInfo ci) {
+        this.scaledWidth = this.minecraft.width / ExtraScreen.scale;
+        this.scaledHeight = this.minecraft.height / ExtraScreen.scale;
+
         if (TitleScreen.hideHud) {
             ci.cancel();
         }
@@ -75,11 +77,11 @@ public class InGameHudMixin implements ITickable {
             }
 
             if (textAlpha > 0) {
-                GL11.glEnable(GlConst.GL_BLEND);
-                GL11.glColor4f(1.0f, 1.0f, 1.0f, textAlpha / 255.0f);
-                this.minecraft.font.drawShadow(Language.translate(TileID.get(this.lastToolHighlight).getTranslationKey()), x, y, 16777215);
-                GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-                GL11.glDisable(GlConst.GL_BLEND);
+                RenderHelper.setGlobalColor(1.0f, 1.0f, 1.0f, 1.0f);
+                RenderHelper.enableBlend();
+                RenderHelper.defaultBlendFunc();
+                TextRenderer.drawStringShadow(Language.translate(TileID.get(this.lastToolHighlight).getTranslationKey()), x, y, 16777215 + (textAlpha << 24));
+                RenderHelper.disableBlend();
             }
         }
 

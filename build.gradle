@@ -36,6 +36,15 @@ dependencies {
 	mappings loom.layered {
 		it.mappings("https://github.com/AntiquityMC/PotentialLamp/releases/download/${project.pl_mappings}/obfToNamed.jar")
 	}
+
+	minecraftLibraries "org.lwjgl.lwjgl:lwjgl:2.9.4-nightly-20150209"
+	minecraftLibraries "org.lwjgl.lwjgl:lwjgl-platform:2.9.4-nightly-20150209"
+	minecraftLibraries "org.lwjgl.lwjgl:lwjgl_util:2.9.4-nightly-20150209"
+
+	afterEvaluate {
+		minecraftNatives "org.lwjgl.lwjgl:lwjgl-platform:2.9.4-nightly-20150209:natives-linux"
+	}
+
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 }
 

@@ -1,9 +1,6 @@
 package me.kalmemarq.legacygui.gui.screen;
 
-import com.mojang.minecraft.level.tile.Tile;
-import com.mojang.minecraft.renderer.Tesselator;
 import com.mojang.minecraft.util.Mth;
-import me.kalmemarq.legacygui.LegacyGUIMod;
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
 import me.kalmemarq.legacygui.gui.component.TexturedButtonWidget;
@@ -44,11 +41,14 @@ public class TitleScreen extends ExtraScreen {
             this.minecraft.openScreen(new MultiplayerScreen(this));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 48, 200, 20, Language.translate("menu.mods"), button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 48, 98, 20, Language.translate("menu.mods"), button -> {
             this.minecraft.openScreen(new ModsScreen(this));
         }, ((button, mouseX, mouseY) -> {
             this.drawTooltip(FabricLoader.getInstance().getAllMods().size() + " Mods", mouseX, mouseY);
         })));
+
+        this.addWidget(new ButtonWidget(this.width / 2 + 2, this.height / 4 + 45 + 48, 98, 20, Language.translate("Texture Packs"), button -> {
+        }));
 
         this.addWidget(new TexturedButtonWidget(this.width / 2 - 100 - 24, this.height / 4 + 45 + 86, 20, 20, 0, 106, 20, "gui/gui.png", button -> {
             this.minecraft.openScreen(new LanguageScreen(this));
@@ -61,10 +61,6 @@ public class TitleScreen extends ExtraScreen {
         this.addWidget(new ButtonWidget(this.width / 2 + 2, this.height / 4 + 45 + 86, 98, 20, Language.translate("menu.quit"), button -> {
             this.minecraft.destroy();
             System.exit(0);
-        }));
-
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 86 + 24, 200, 20, Language.translate("Test Screen"), button -> {
-            this.minecraft.openScreen(new TestScreen(this));
         }));
     }
 
@@ -111,13 +107,8 @@ public class TitleScreen extends ExtraScreen {
         drawCenteredString(this.font, this.splash, 0, -8, 0xfff717);
         GL11.glPopMatrix();
 
-        drawString(this.font, "Minecraft c0.30 (" + FabricLoader.getInstance().getAllMods().size() + " Mods)", 1, 1, 0xAAAAAA);
+        TextRenderer.drawStringShadow("Minecraft c0.30 (" + FabricLoader.getInstance().getAllMods().size() + " Mods)", 1, 1, 0xAAAAAA);
         drawString(this.font, COPYRIGHT, this.width - this.copyrightWidth - 1, this.height - 10, 0xAAAAAA);
-
-
-        RenderHelper.bindTexture("/terrain.png");
-        BufferBuilder builder = ExtraTesselator.getInstance().getBuilder();
-        ItemRenderer.renderGuiTile(TileID.BRICKS, builder, 40, 40);
 
         super.render(mouseX, mouseY);
     }

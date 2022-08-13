@@ -1,13 +1,15 @@
 package me.kalmemarq.legacygui.gui;
 
+import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.gui.DrawableHelper;
 import com.mojang.minecraft.renderer.Tesselator;
-import me.kalmemarq.legacygui.util.BufferBuilder;
-import me.kalmemarq.legacygui.util.ExtraTesselator;
-import me.kalmemarq.legacygui.util.GlConst;
+import me.kalmemarq.legacygui.LegacyGUIMod;
+import me.kalmemarq.legacygui.util.*;
 import org.lwjgl.opengl.GL11;
 
 public class ExtraDrawableHelper extends DrawableHelper {
+    public static float blitOffset = 0.0f;
+
     protected void hLineXX(int x0, int x1, int y, int color) {
         if (x1 < x0) {
             int temp = x0;
@@ -47,20 +49,20 @@ public class ExtraDrawableHelper extends DrawableHelper {
         int g = color >> 8 & 0xFF;
         int b = color & 0xFF;
 
-        GL11.glEnable(GlConst.GL_BLEND);
-        GL11.glDisable(GlConst.GL_TEXTURE_2D);
-        GL11.glBlendFunc(GlConst.GL_SRC_ALPHA, GlConst.GL_ONE_MINUS_SRC_ALPHA);
+        RenderHelper.disableTexture();
+        RenderHelper.enableBlend();
+        RenderHelper.defaultBlendFunc();
 
         BufferBuilder builder = ExtraTesselator.getInstance().getBuilder();
         builder.begin(GlConst.GL_QUADS);
-        builder.vertex(x0, y1, 20).color(r, g, b, a).endVertex();
-        builder.vertex(x1, y1, 20).color(r, g, b, a).endVertex();
-        builder.vertex(x1, y0, 20).color(r, g, b, a).endVertex();
-        builder.vertex(x0, y0, 20).color(r, g, b, a).endVertex();
+        builder.vertex(x0, y1, 0).color(r, g, b, a).endVertex();
+        builder.vertex(x1, y1, 0).color(r, g, b, a).endVertex();
+        builder.vertex(x1, y0, 0).color(r, g, b, a).endVertex();
+        builder.vertex(x0, y0, 0).color(r, g, b, a).endVertex();
         ExtraTesselator.endAndDraw();
 
-        GL11.glEnable(GlConst.GL_TEXTURE_2D);
-        GL11.glDisable(GlConst.GL_BLEND);
+        RenderHelper.disableBlend();
+        RenderHelper.enableTexture();
     }
 
     public static void fillGradientXX(int x0, int y0, int x1, int y1, int colorStart, int colorEnd) {
@@ -102,6 +104,23 @@ public class ExtraDrawableHelper extends DrawableHelper {
         builder.vertex((float)x1, (float)y1, (float)z).color(eR, eG, eB, eA).endVertex();
     }
 
+    public static void fillGradientXX(BufferBuilder builder, float x0, float y0, float x1, float y1, int z, int colorStart, int colorEnd) {
+        float sA = (float)(colorStart >>> 24) / 255.0F;
+        float sR = (float)(colorStart >> 16 & 255) / 255.0F;
+        float sG = (float)(colorStart >> 8 & 255) / 255.0F;
+        float sB = (int) ((float)(colorStart & 255) / 255.0F);
+
+        float eA = (float)(colorEnd >>> 24) / 255.0F;
+        float eR = (float)(colorEnd >> 16 & 255) / 255.0F;
+        float eG = (float)(colorEnd >> 8 & 255) / 255.0F;
+        float eB = (int) ((float)(colorEnd & 255) / 255.0F);
+
+        builder.vertex((float)x1, (float)y0, (float)z).color(sR, sG, sB, sA).endVertex();
+        builder.vertex((float)x0, (float)y0, (float)z).color(sR, sG, sB, sA).endVertex();
+        builder.vertex((float)x0, (float)y1, (float)z).color(eR, eG, eB, eA).endVertex();
+        builder.vertex((float)x1, (float)y1, (float)z).color(eR, eG, eB, eA).endVertex();
+    }
+
     public static void drawTextureXX(int x, int y, int u, int v, int width, int height) {
         drawTextureXX(x, y, u, v, width, height, 256, 256);
     }
@@ -120,11 +139,23 @@ public class ExtraDrawableHelper extends DrawableHelper {
 
         BufferBuilder builder = ExtraTesselator.getInstance().getBuilder();
         builder.begin(GlConst.GL_QUADS);
-        builder.vertex((float)x, (float)y1, (float)0).uv(u0, v1).endVertex();
-        builder.vertex((float)x1, (float)y1, (float)0).uv(u1, v1).endVertex();
-        builder.vertex((float)x1, (float)y, (float)0).uv(u1, v0).endVertex();
-        builder.vertex((float)x, (float)y, (float)0).uv(u0, v0).endVertex();
+        builder.vertex((float)x, (float)y1, (float)blitOffset).uv(u0, v1).endVertex();
+        builder.vertex((float)x1, (float)y1, (float)blitOffset).uv(u1, v1).endVertex();
+        builder.vertex((float)x1, (float)y, (float)blitOffset).uv(u1, v0).endVertex();
+        builder.vertex((float)x, (float)y, (float)blitOffset).uv(u0, v0).endVertex();
         ExtraTesselator.endAndDraw();
+    }
+
+    public static void drawStringShadow(String text, int x, int y, int color) {
+        TextRenderer.drawStringShadow(text, x, y, color);
+    }
+
+    public static void drawString(String text, int x, int y, int color) {
+        TextRenderer.drawString(text, x, y, color);
+    }
+
+    public static void drawCenteredString(String text, int x, int y, int color) {
+        TextRenderer.drawStringShadow(text, x - LegacyGUIMod.getMCInstance().font.width(text) / 2, y, color);
     }
 
 //    public static enum GradientDir {

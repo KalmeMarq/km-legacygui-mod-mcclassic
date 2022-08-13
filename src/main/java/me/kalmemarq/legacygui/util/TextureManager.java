@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class TextureManager {
+
     public HashMap<String, Integer> idMap = new HashMap<>();
     public HashMap<Integer, BufferedImage> bIMap = new HashMap<>();
 

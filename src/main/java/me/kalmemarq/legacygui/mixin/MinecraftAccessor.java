@@ -9,4 +9,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface MinecraftAccessor {
     @Accessor("timer")
     Timer getTimer();
+    @Accessor("running")
+    boolean getRunning();
 }

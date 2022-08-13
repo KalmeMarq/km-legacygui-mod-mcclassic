@@ -2,6 +2,7 @@ package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.gamemode.CreativeMode;
 import com.mojang.minecraft.gui.Button;
+import com.mojang.minecraft.gui.LoadLevelScreen;
 import com.mojang.minecraft.gui.Screen;
 import me.kalmemarq.legacygui.SurvivalMode;
 import me.kalmemarq.legacygui.gui.component.ButtonWidget;
@@ -44,7 +45,7 @@ public class CreateNewLevelScreen extends ExtraScreen {
     private void generateWorld(int id) {
         this.minecraft.gameMode = isCreative ? new CreativeMode(this.minecraft) : new SurvivalMode(this.minecraft);
         this.minecraft.generateNewLevel(id);
-        this.minecraft.openScreen((Screen)null);
+        this.minecraft.openScreen(null/*new LevelLoadingScreen(this.minecraft.levelLoaderListener)*/);
         this.minecraft.grabMouse();
     }
 
