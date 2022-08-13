@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "kmlegacygui",
+  "version": "${version}",
+  "name": "KM Legacy GUI Mod",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "KalmeMarq"
+  ],
+  "contact": {
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/kmlegacy/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.kalmemarq.legacygui.LegacyGUIMod"
+    ]
+  },
+  "mixins": [
+    "kmlegacygui.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "java": ">=8"
+  },
+  "suggests": {
+  }
+}
