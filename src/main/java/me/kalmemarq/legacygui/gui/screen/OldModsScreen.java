@@ -1,7 +1,7 @@
 package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.gui.Screen;
-import me.kalmemarq.legacygui.gui.component.ButtonWidget;
+import me.kalmemarq.legacygui.gui.widget.ButtonWidget;
 import me.kalmemarq.legacygui.util.Language;
 import me.kalmemarq.legacygui.util.TextUtil;
 import net.fabricmc.loader.api.FabricLoader;

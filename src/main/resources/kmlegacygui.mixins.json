@@ -15,7 +15,11 @@
     "MobMixin",
     "OptionsInputMixin",
     "OptionsMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "ResourceDownloadThreadMixin",
+    "SoundManagerMixin",
+    "UrlSoundSourceAccessor",
+    "UrlSoundSourceMixin"
   ],
   "client": [
     "ControlsScreenMixin",

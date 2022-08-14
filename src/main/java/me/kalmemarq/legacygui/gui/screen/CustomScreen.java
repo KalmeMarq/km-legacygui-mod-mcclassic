@@ -1,8 +1,7 @@
 package me.kalmemarq.legacygui.gui.screen;
 
-import com.mojang.minecraft.gui.Button;
 import com.mojang.minecraft.gui.Screen;
-import me.kalmemarq.legacygui.gui.component.ButtonWidget;
+import me.kalmemarq.legacygui.gui.widget.ButtonWidget;
 
 public class CustomScreen extends ExtraScreen {
     private final Screen parent;

@@ -40,6 +40,10 @@ public class LegacyGUIMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		SplashManager.load();
+		ModContainer container = FabricLoader.getInstance().getModContainer(LegacyGUIMod.MOD_ID).get();
+		MC_INSTANCE.soundManager.loadSound(container.findPath("click.ogg").get().toFile(), "click.ogg");
+
+		LOGGER.info("" + MC_INSTANCE.soundManager.sounds.keySet());
 	}
 
 	public static void onMinecraftInitalized(Minecraft mc) {

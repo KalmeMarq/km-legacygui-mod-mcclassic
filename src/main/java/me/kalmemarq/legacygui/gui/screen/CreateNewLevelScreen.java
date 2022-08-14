@@ -2,10 +2,9 @@ package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.gamemode.CreativeMode;
 import com.mojang.minecraft.gui.Button;
-import com.mojang.minecraft.gui.LoadLevelScreen;
 import com.mojang.minecraft.gui.Screen;
 import me.kalmemarq.legacygui.SurvivalMode;
-import me.kalmemarq.legacygui.gui.component.ButtonWidget;
+import me.kalmemarq.legacygui.gui.widget.ButtonWidget;
 import me.kalmemarq.legacygui.util.Language;
 
 public class CreateNewLevelScreen extends ExtraScreen {

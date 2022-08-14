@@ -1,9 +1,8 @@
-package me.kalmemarq.legacygui.gui.component.entries;
+package me.kalmemarq.legacygui.gui.widget.entries;
 
 import com.mojang.minecraft.Minecraft;
-import me.kalmemarq.legacygui.gui.component.ModListWidget;
-import me.kalmemarq.legacygui.gui.component.ObjectSelectionList;
-import me.kalmemarq.legacygui.util.GlConst;
+import me.kalmemarq.legacygui.gui.widget.ModListWidget;
+import me.kalmemarq.legacygui.gui.widget.ObjectSelectionList;
 import me.kalmemarq.legacygui.util.TextUtil;
 import net.fabricmc.loader.api.ModContainer;
 import org.lwjgl.opengl.GL11;

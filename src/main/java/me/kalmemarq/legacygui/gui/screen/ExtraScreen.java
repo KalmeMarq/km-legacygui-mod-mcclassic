@@ -1,13 +1,12 @@
 package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.Minecraft;
-import com.mojang.minecraft.gui.DrawableHelper;
 import com.mojang.minecraft.gui.Screen;
-import com.mojang.minecraft.renderer.Tesselator;
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
-import me.kalmemarq.legacygui.gui.component.AbstractWidget;
-import me.kalmemarq.legacygui.gui.component.ButtonWidget;
-import me.kalmemarq.legacygui.gui.component.EditTextWidget;
+import me.kalmemarq.legacygui.gui.IRenderable;
+import me.kalmemarq.legacygui.gui.widget.AbstractSelectionList;
+import me.kalmemarq.legacygui.gui.widget.AbstractWidget;
+import me.kalmemarq.legacygui.gui.widget.EditTextWidget;
 import me.kalmemarq.legacygui.util.*;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -17,6 +16,7 @@ import java.util.List;
 
 public abstract class ExtraScreen extends Screen implements IScreenExtra {
     protected String title = "";
+    public List<IRenderable> children = new ArrayList<>();
     public List<AbstractWidget> widgets = new ArrayList<>();
     public static int scale = 3;
 
@@ -27,6 +27,14 @@ public abstract class ExtraScreen extends Screen implements IScreenExtra {
     public ExtraScreen(String title) {
         super();
         this.title = title;
+    }
+
+    public void mouseScroll(int yD) {
+        for (IRenderable child : children) {
+            if (child instanceof AbstractSelectionList) {
+                ((AbstractSelectionList)child).mouseScrolled(yD);
+            }
+        }
     }
 
     @Override
@@ -76,6 +84,7 @@ public abstract class ExtraScreen extends Screen implements IScreenExtra {
 
     public <T extends AbstractWidget> T addWidget(T widget) {
         this.widgets.add(widget);
+        this.children.add(widget);
         return widget;
     }
 
@@ -101,8 +110,8 @@ public abstract class ExtraScreen extends Screen implements IScreenExtra {
     }
 
     public void render(int mouseX, int mouseY) {
-        for (AbstractWidget widget : widgets) {
-            widget.render(mouseX, mouseY);
+        for (IRenderable child : children) {
+            child.render(mouseX, mouseY);
         }
     }
 

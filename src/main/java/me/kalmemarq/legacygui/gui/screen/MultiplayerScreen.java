@@ -1,12 +1,12 @@
 package me.kalmemarq.legacygui.gui.screen;
 
-import com.mojang.minecraft.Options;
 import com.mojang.minecraft.User;
 import com.mojang.minecraft.gui.Screen;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.net.ConnectionManager;
-import me.kalmemarq.legacygui.gui.component.ButtonWidget;
-import me.kalmemarq.legacygui.gui.component.EditTextWidget;
+import me.kalmemarq.legacygui.gui.widget.ButtonWidget;
+import me.kalmemarq.legacygui.gui.widget.EditTextWidget;
+import me.kalmemarq.legacygui.gui.widget.ObjectSelectionList;
 import me.kalmemarq.legacygui.util.Language;
 import org.lwjgl.input.Keyboard;
 
@@ -19,26 +19,26 @@ public class MultiplayerScreen extends ExtraScreen {
     }
 
     EditTextWidget playerNameBox;
-    EditTextWidget serverAddressBox;
+    ObjectSelectionList list;
 
     @Override
     public void init() {
         Keyboard.enableRepeatEvents(true);
 
-        this.playerNameBox = this.addWidget(new EditTextWidget(this.width / 2 - 100, this.height / 4 - 12 + 12, 200, 20));
-        this.serverAddressBox = this.addWidget(new EditTextWidget(this.width / 2 - 100, this.height / 4 - 12 + 40 + 12, 200, 20));
-
+        this.playerNameBox = this.addWidget(new EditTextWidget(2, 12, 100, 20));
+        playerNameBox.setMaxLength(20);
         this.playerNameBox.setValue("KalmeMarq");
-        this.serverAddressBox.setValue("localhost:25565");
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168 - 24, 200, 20, Language.translate("multiplayer.connect"), (button) -> {
-            if (!this.serverAddressBox.getValue().isEmpty()) {
+        list = new ObjectSelectionList(this.minecraft, this.width, this.height, 32, this.height - 36, 36);
+
+        this.addWidget(new ButtonWidget(this.width / 2 - 155, this.height - 28, 150, 20, Language.translate("multiplayer.direct_connect"), (button) -> {
+            this.minecraft.openScreen(new DirectConnectScreen(this, (address -> {
                 try {
                     Level level = new Level();
                     level.setData(8, 8, 8, new byte[512]);
                     this.minecraft.setLevel(level);
 
-                    String[] ip = this.serverAddressBox.getValue().split(":");
+                    String[] ip = address.split(":");
                     User user = this.minecraft.user;
                     String name;
                     String pass;
@@ -62,25 +62,25 @@ public class MultiplayerScreen extends ExtraScreen {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
+            })));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 168, 200, 20, Language.translate("gui.cancel"), (button) -> {
+        this.addWidget(new ButtonWidget(this.width / 2 + 5, this.height - 28, 150, 20, Language.translate("gui.cancel"), (button) -> {
             this.minecraft.openScreen(this.parent);
         }));
     }
 
     public void tick() {
         if (this.playerNameBox != null) this.playerNameBox.tick();
-        if (this.serverAddressBox != null) this.serverAddressBox.tick();
     }
 
     @Override
     public void render(int mouseX, int mouseY) {
         this.renderBackground();
         drawCenteredString(this.font, this.title, this.width / 2, 15, 16777215);
-        drawString(this.font, Language.translate("multiplayer.username"), this.width / 2 - 100, this.height / 4 - 12, 0xbbbbbb);
-        drawString(this.font, Language.translate("multiplayer.server_address"), this.width / 2 - 100, this.height / 4 - 12 + 40, 0xbbbbbb);
+        drawString(this.font, Language.translate("multiplayer.username"), 2, 1, 0xbbbbbb);
+//        drawString(this.font, Language.translate("multiplayer.server_address"), this.width / 2 - 100, this.height / 4 - 12 + 40, 0xbbbbbb);
+        list.render(mouseX, mouseY);
         super.render(mouseX, mouseY);
     }
 }

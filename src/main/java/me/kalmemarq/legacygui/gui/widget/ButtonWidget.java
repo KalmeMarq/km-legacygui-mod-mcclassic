@@ -1,12 +1,9 @@
-package me.kalmemarq.legacygui.gui.component;
+package me.kalmemarq.legacygui.gui.widget;
 
-import com.mojang.minecraft.Minecraft;
-import com.mojang.minecraft.gui.DrawableHelper;
+import com.mojang.minecraft.sound.Sound;
+import com.mojang.minecraft.sound.WorldSound;
 import me.kalmemarq.legacygui.LegacyGUIMod;
-import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
 import me.kalmemarq.legacygui.gui.IRenderable;
-import me.kalmemarq.legacygui.util.GlConst;
-import me.kalmemarq.legacygui.util.RenderHelper;
 import org.lwjgl.opengl.GL11;
 
 public class ButtonWidget extends AbstractWidget implements IRenderable {
@@ -59,6 +56,24 @@ public class ButtonWidget extends AbstractWidget implements IRenderable {
         if (this.isValidButton(button)) {
             if (this.clicked(mouseX, mouseY)) {
                 this.onClick(mouseX, mouseY);
+                Sound s = LegacyGUIMod.getMCInstance().soundManager.getSound("click", 1.0f, 1.0f);
+
+                if (s != null) {
+                    LegacyGUIMod.getMCInstance().soundPlayer.a(s, new WorldSound() {
+                        @Override
+                        public float a() {
+                            return 0.5f;
+                        }
+
+                        @Override
+                        public float getVolume() {
+                            return 1.0f;
+                        }
+                    });
+                } else {
+                    LegacyGUIMod.LOGGER.info("NULL NULL NULL");
+                }
+
                 return true;
             }
         }

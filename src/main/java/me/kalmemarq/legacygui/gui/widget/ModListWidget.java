@@ -1,8 +1,8 @@
-package me.kalmemarq.legacygui.gui.component;
+package me.kalmemarq.legacygui.gui.widget;
 
 import com.mojang.minecraft.Minecraft;
-import me.kalmemarq.legacygui.gui.component.entries.IndependentEntry;
-import me.kalmemarq.legacygui.gui.component.entries.ModListEntry;
+import me.kalmemarq.legacygui.gui.widget.entries.IndependentEntry;
+import me.kalmemarq.legacygui.gui.widget.entries.ModListEntry;
 import me.kalmemarq.legacygui.gui.screen.ModsScreen;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;

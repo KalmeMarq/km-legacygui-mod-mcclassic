@@ -92,10 +92,13 @@ public abstract class MinecraftMixin implements IMinecraftExtra {
 
 	@Redirect(at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/gui/InGameHud;render(FZII)V"), method = "run")
 	private void runaaa(InGameHud instance, float hasScreen, boolean mouseX, int mouseY, int i) {
-//		ExtraScreen.scale = this.calculateScale(3);
 		LegacyGUIMod.inGameHud.render(hasScreen);
-//		instance.render(hasScreen, mouseX, mouseY, i);
 	}
+
+//	@Redirect(at = @At(value = "INVOKE", target = "in"), method = "run")
+//	private void runaaa(InGameHud instance, float hasScreen, boolean mouseX, int mouseY, int i) {
+//		LegacyGUIMod.inGameHud.render(hasScreen);
+//	}
 
 
 
@@ -118,6 +121,7 @@ public abstract class MinecraftMixin implements IMinecraftExtra {
 			if (Keyboard.getEventKey() == Keyboard.KEY_F1) {
 				TitleScreen.hideHud = !TitleScreen.hideHud;
 			}
+		} else {
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_F2)) {
@@ -137,14 +141,19 @@ public abstract class MinecraftMixin implements IMinecraftExtra {
 
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void ticka(CallbackInfo ci) {
-		((ITickable)(Object) this.hud).tick();
+		if (LegacyGUIMod.inGameHud != null) {
+			LegacyGUIMod.inGameHud.tick();
+		}
 
-//		if (this.applet.getWidth() != this.width || this.applet.getHeight() != this.height) {
-//			if (System.currentTimeMillis() - lastResizeTime > 500L) {
-//				this.resizeX(this.applet.getWidth(), this.applet.getHeight());
-//				lastResizeTime = System.currentTimeMillis();
-//			}
-//		}
+		if (this.screen != null) {
+			int s = Mouse.getDWheel();
+
+			if (s != 0) {
+				if (this.screen instanceof ExtraScreen) {
+					((ExtraScreen)this.screen).mouseScroll(s);
+				}
+			}
+		}
 
 		if (this.parent != null && /*!this.isFullscreen &&*/ (this.parent.getWidth() != this.width || this.parent.getHeight() != this.height)) {
 			this.width = this.parent.getWidth();

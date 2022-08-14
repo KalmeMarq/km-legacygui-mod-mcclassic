@@ -1,11 +1,8 @@
 package me.kalmemarq.legacygui.gui.screen;
 
-import com.mojang.minecraft.gui.Screen;
-import me.kalmemarq.legacygui.gui.component.ButtonWidget;
+import me.kalmemarq.legacygui.gui.widget.ButtonWidget;
 import me.kalmemarq.legacygui.util.Language;
 import org.lwjgl.input.Keyboard;
-
-import java.util.spi.LocaleNameProvider;
 
 public class GameMenuScreen extends ExtraScreen {
     public GameMenuScreen() {

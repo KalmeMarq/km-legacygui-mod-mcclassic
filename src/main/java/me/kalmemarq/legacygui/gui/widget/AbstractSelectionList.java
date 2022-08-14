@@ -1,4 +1,4 @@
-package me.kalmemarq.legacygui.gui.component;
+package me.kalmemarq.legacygui.gui.widget;
 
 import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.renderer.Tesselator;
@@ -66,6 +66,10 @@ public class AbstractSelectionList<E extends AbstractSelectionList.Entry<E>> ext
     protected void replaceEntries(Collection<E> entries) {
         this.children.clear();
         this.children.addAll(entries);
+    }
+
+    public void mouseScrolled(int var5) {
+        this.setScrollAmount(this.getScrollAmount() - var5 * (double)this.itemHeight / 2.0D);
     }
 
     protected int addEntry(E entry) {

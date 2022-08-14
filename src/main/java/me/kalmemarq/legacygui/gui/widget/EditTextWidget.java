@@ -1,13 +1,12 @@
-package me.kalmemarq.legacygui.gui.component;
+package me.kalmemarq.legacygui.gui.widget;
 
 import com.mojang.minecraft.Minecraft;
 import me.kalmemarq.legacygui.LegacyGUIMod;
-import me.kalmemarq.legacygui.util.TextRenderer;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
-import java.security.Key;
 
 public class EditTextWidget extends AbstractWidget {
     private static final int DEFAULT_COLOR = 0xFFBBBBBB;
@@ -17,6 +16,8 @@ public class EditTextWidget extends AbstractWidget {
     public String placeholder = "";
     public boolean selected = false;
     private int maxLength = 32;
+    @Nullable
+    private EditBoxListener onChangelistener;
 
     private int ticks;
 
@@ -30,6 +31,10 @@ public class EditTextWidget extends AbstractWidget {
 
     public void setPlaceholder(String placeholder) {
         this.placeholder = placeholder;
+    }
+
+    public void setOnChangeistener(EditBoxListener listener) {
+        this.onChangelistener = listener;
     }
 
     @Override
@@ -63,6 +68,10 @@ public class EditTextWidget extends AbstractWidget {
                             this.text = this.text + letter;
                         }
                     }
+
+                    if (this.onChangelistener != null) {
+                        this.onChangelistener.onChange(this.text);
+                    }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -70,17 +79,17 @@ public class EditTextWidget extends AbstractWidget {
             }
 
             if (code == Keyboard.KEY_BACK && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-                this.text = "";
+                this.setText("");
                 return true;
             }
 
             if (code == Keyboard.KEY_BACK && this.text.length() > 0) {
-                this.text = this.text.substring(0, this.text.length() - 1);
+                this.setText(this.text.substring(0, this.text.length() - 1));
                 return true;
             }
 
             if (this.validate(key)) {
-                this.text = this.text + key;
+                this.setText(this.text + key);
                 return true;
             }
         }
@@ -90,6 +99,9 @@ public class EditTextWidget extends AbstractWidget {
 
     private void setText(String text) {
         this.text = text;
+        if (this.onChangelistener != null) {
+            this.onChangelistener.onChange(this.text);
+        }
     }
 
     public void setValue(String value) {

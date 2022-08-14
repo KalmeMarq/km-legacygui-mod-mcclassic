@@ -1,10 +1,9 @@
-package me.kalmemarq.legacygui.gui.component;
+package me.kalmemarq.legacygui.gui.widget;
 
-import com.mojang.minecraft.Minecraft;
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
-import org.jetbrains.annotations.MustBeInvokedByOverriders;
+import me.kalmemarq.legacygui.gui.IRenderable;
 
-public abstract class AbstractWidget extends ExtraDrawableHelper {
+public abstract class AbstractWidget extends ExtraDrawableHelper implements IRenderable {
     public int x;
     public int y;
     protected int width;

@@ -2,8 +2,8 @@ package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.util.Mth;
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
-import me.kalmemarq.legacygui.gui.component.ButtonWidget;
-import me.kalmemarq.legacygui.gui.component.TexturedButtonWidget;
+import me.kalmemarq.legacygui.gui.widget.ButtonWidget;
+import me.kalmemarq.legacygui.gui.widget.TexturedButtonWidget;
 import me.kalmemarq.legacygui.util.*;
 import net.fabricmc.loader.api.FabricLoader;
 import org.lwjgl.opengl.GL11;

@@ -1,4 +1,4 @@
-package me.kalmemarq.legacygui.gui.component;
+package me.kalmemarq.legacygui.gui.widget;
 
 import com.mojang.minecraft.Minecraft;
 

@@ -15,6 +15,7 @@
 - Multiplayer screen
 - Servers is accessible through the "Multiplayer" button in the TitleScreen
 - Creative flight (From Creative Flight by Juuxel)
+- Item pop animation updated
 
 ![title](./title.png)
 

@@ -32,6 +32,7 @@ public abstract class ScreenMixin implements IScreenExtra {
         this.buttons.clear();
 
         if (((Screen)(Object)this) instanceof ExtraScreen) {
+            ((ExtraScreen)(Object)this).children.clear();
             ((ExtraScreen)(Object)this).widgets.clear();
         }
     }

@@ -1,7 +1,5 @@
-package me.kalmemarq.legacygui.gui.component;
+package me.kalmemarq.legacygui.gui.widget;
 
-import com.mojang.minecraft.Minecraft;
-import me.kalmemarq.legacygui.util.GlConst;
 import me.kalmemarq.legacygui.util.RenderHelper;
 import org.lwjgl.opengl.GL11;
 
