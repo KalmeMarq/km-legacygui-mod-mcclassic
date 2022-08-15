@@ -354,4 +354,15 @@ public abstract class MinecraftMixin implements IMinecraftExtra {
 			}
 		}
 	}
+//
+//	@Inject(method = "destroy", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;destroy()V"))
+//	private void destroys(CallbackInfo ci) {
+////		try {
+////			if (LegacyGUIMod.getMCInstance() != null) {
+////				LegacyGUIMod.textureManager.close();
+////			}
+////		} catch (Exception e) {
+////			e.printStackTrace();
+////		}
+//	}
 }

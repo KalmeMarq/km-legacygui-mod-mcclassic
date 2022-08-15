@@ -2,6 +2,8 @@ package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.gui.Screen;
 import me.kalmemarq.legacygui.Util;
+import me.kalmemarq.legacygui.gui.IRenderable;
+import me.kalmemarq.legacygui.gui.widget.AbstractSelectionList;
 import me.kalmemarq.legacygui.gui.widget.ButtonWidget;
 import me.kalmemarq.legacygui.gui.widget.ModListWidget;
 import me.kalmemarq.legacygui.gui.widget.entries.ModListEntry;
@@ -26,6 +28,13 @@ public class ModsScreen extends ExtraScreen {
         this.parent = parent;
     }
 
+    public void mouseScroll(int yD) {
+        if (this.list != null) {
+            this.list.mouseScrolled(yD / 120.0f);
+        }
+    }
+
+
     @Override
     public void init() {
         paneY = 48;
@@ -35,7 +44,7 @@ public class ModsScreen extends ExtraScreen {
         int searchBoxWidth = paneWidth - 32 - 22;
         searchBoxX = paneWidth / 2 - searchBoxWidth / 2 - 22 / 2;
 
-        this.list = new ModListWidget(this.minecraft, this.paneWidth, this.height, paneY + 19, this.height - 36, 36, "", list, this);
+        this.list = new ModListWidget(this.minecraft, this.paneWidth, this.height, paneY + 19, this.height - 36, 66, "", list, this);
         this.list.reloadFilters();
 
         this.addWidget(new ButtonWidget(this.width / 2 - 154, this.height - 28, 150, 20, Language.translate("Open Mods Folder"), button -> {

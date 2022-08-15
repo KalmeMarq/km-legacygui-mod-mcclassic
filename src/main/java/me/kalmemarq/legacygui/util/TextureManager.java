@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class TextureManager {
+public class TextureManager implements Closeable {
 
     public HashMap<String, Integer> idMap = new HashMap<>();
     public HashMap<Integer, BufferedImage> bIMap = new HashMap<>();
@@ -122,5 +123,14 @@ public class TextureManager {
     public final void a(c arg) {
         this.e.add(arg);
         arg.a();
+    }
+
+    @Override
+    public void close() throws IOException {
+        idBuffer.clear();
+        textureBuffer.clear();
+
+        idMap.values().forEach(GL11::glDeleteTextures);
+
     }
 }

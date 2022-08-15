@@ -68,7 +68,7 @@ public class AbstractSelectionList<E extends AbstractSelectionList.Entry<E>> ext
         this.children.addAll(entries);
     }
 
-    public void mouseScrolled(int var5) {
+    public void mouseScrolled(float var5) {
         this.setScrollAmount(this.getScrollAmount() - var5 * (double)this.itemHeight / 2.0D);
     }
 
