@@ -34,7 +34,7 @@ dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.layered {
-		it.mappings("https://github.com/isXander/InfdevMappings/releases/download/${project.pl_mappings}/obfToNamed.jar")
+		it.mappings("https://github.com/KalmeMarq/InfdevMappings/releases/download/${project.pl_mappings}/obfToNamed.jar")
 	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 }
