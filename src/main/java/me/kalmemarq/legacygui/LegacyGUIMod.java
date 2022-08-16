@@ -2,6 +2,7 @@ package me.kalmemarq.legacygui;
 
 import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.input.Keybind;
+import me.kalmemarq.legacygui.font.TextRenderer;
 import me.kalmemarq.legacygui.gui.hud.InGameHud;
 import me.kalmemarq.legacygui.util.Language;
 import me.kalmemarq.legacygui.util.SplashManager;
@@ -23,6 +24,7 @@ public class LegacyGUIMod implements ModInitializer {
 	public static final Keybind PLAYERLIST_KEYBIND = new Keybind("Player List", Keyboard.KEY_TAB);
 
 	public static TextureManager textureManager;
+	public static TextRenderer textRenderer;
 	private static Minecraft MC_INSTANCE;
 
 	public static InGameHud inGameHud;
@@ -31,6 +33,7 @@ public class LegacyGUIMod implements ModInitializer {
 	public static void onMCConstructor(Minecraft mc) {
 		MC_INSTANCE = mc;
 		inGameHud = new InGameHud(mc);
+		textRenderer = new TextRenderer();
 	}
 
 	public static Minecraft getMCInstance() {

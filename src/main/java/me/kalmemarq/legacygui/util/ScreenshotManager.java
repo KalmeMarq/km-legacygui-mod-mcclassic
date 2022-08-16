@@ -1,6 +1,7 @@
 package me.kalmemarq.legacygui.util;
 
 import com.mojang.minecraft.Minecraft;
+import me.kalmemarq.legacygui.LegacyGUIMod;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -31,9 +32,9 @@ public class ScreenshotManager {
             if (bufferedImage != null) {
                 ImageIO.write(bufferedImage, "png", fl);
 
-                mc.hud.addMessage("Saved screenshot as " + fl.getName());
+                LegacyGUIMod.inGameHud.addMessage("Saved screenshot as " + fl.getName());
             } else {
-                mc.hud.addMessage("Failed to save: " + fl.getName());
+                LegacyGUIMod.inGameHud.addMessage("Failed to save: " + fl.getName());
             }
         } catch (Exception e) {
             mc.hud.addMessage("Failed to create screenshots folder");

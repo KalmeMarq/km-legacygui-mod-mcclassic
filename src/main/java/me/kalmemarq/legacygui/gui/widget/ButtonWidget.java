@@ -4,6 +4,7 @@ import com.mojang.minecraft.sound.Sound;
 import com.mojang.minecraft.sound.WorldSound;
 import me.kalmemarq.legacygui.LegacyGUIMod;
 import me.kalmemarq.legacygui.gui.IRenderable;
+import me.kalmemarq.legacygui.text.Text;
 import org.lwjgl.opengl.GL11;
 
 public class ButtonWidget extends AbstractWidget implements IRenderable {
@@ -14,10 +15,18 @@ public class ButtonWidget extends AbstractWidget implements IRenderable {
     protected ButtonWidget.TooltipSupplier onTooltip;
 
     public ButtonWidget(int x, int y, int width, int height, String title, ButtonWidget.PressAction onPress) {
+        this(x, y, width, height, Text.literal(title), onPress, NO_TOOLTIP);
+    }
+
+    public ButtonWidget(int x, int y, int width, int height, Text title, ButtonWidget.PressAction onPress) {
         this(x, y, width, height, title, onPress, NO_TOOLTIP);
     }
 
     public ButtonWidget(int x, int y, int width, int height, String title, ButtonWidget.PressAction onPress, ButtonWidget.TooltipSupplier onTooltip) {
+        this(x, y, width, height, Text.literal(title), onPress, onTooltip);
+    }
+
+    public ButtonWidget(int x, int y, int width, int height, Text title, ButtonWidget.PressAction onPress, ButtonWidget.TooltipSupplier onTooltip) {
         super(x, y, width, height, title);
         this.onPress = onPress;
         this.onTooltip = onTooltip;
@@ -41,7 +50,7 @@ public class ButtonWidget extends AbstractWidget implements IRenderable {
         drawTextureXX(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + (20 * yOff), this.width / 2, 20);
 
         int textColor = !this.active ? -6250336 : this.hovered ? 16777120 : 14737632;
-        drawCenteredString(this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, textColor);
+        drawCenteredText(LegacyGUIMod.textRenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, textColor);
 
         if (this.hovered) {
             this.renderToolTip(mouseX, mouseY);

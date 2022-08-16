@@ -5,6 +5,7 @@ import com.mojang.minecraft.gui.Button;
 import com.mojang.minecraft.gui.Screen;
 import me.kalmemarq.legacygui.SurvivalMode;
 import me.kalmemarq.legacygui.gui.widget.ButtonWidget;
+import me.kalmemarq.legacygui.text.Text;
 import me.kalmemarq.legacygui.util.Language;
 
 public class CreateNewLevelScreen extends ExtraScreen {
@@ -31,7 +32,7 @@ public class CreateNewLevelScreen extends ExtraScreen {
 
         gameModeBtn = new ButtonWidget(this.width / 2 - 100, this.height / 4 + 72, 200, 20, Language.translate("generateLevel.gamemode") + ": " + (isCreative ? Language.translate("generateLevel.gamemode.creative") : Language.translate("generateLevel.gamemode.survival")), button -> {
             isCreative = !isCreative;
-            gameModeBtn.setMessage(Language.translate("generateLevel.gamemode") + ": " + (isCreative ? Language.translate("generateLevel.gamemode.creative") : Language.translate("generateLevel.gamemode.survival")));
+            gameModeBtn.setMessage(Text.literal(Language.translate("generateLevel.gamemode") + ": " + (isCreative ? Language.translate("generateLevel.gamemode.creative") : Language.translate("generateLevel.gamemode.survival"))));
         });
 
         this.addWidget(gameModeBtn);

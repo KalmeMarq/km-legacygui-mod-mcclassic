@@ -9,6 +9,7 @@ import me.kalmemarq.legacygui.gui.widget.ModListWidget;
 import me.kalmemarq.legacygui.gui.widget.entries.ModListEntry;
 import me.kalmemarq.legacygui.util.Language;
 import net.fabricmc.loader.api.FabricLoader;
+import org.lwjgl.opengl.*;
 
 import java.io.File;
 
@@ -44,7 +45,7 @@ public class ModsScreen extends ExtraScreen {
         int searchBoxWidth = paneWidth - 32 - 22;
         searchBoxX = paneWidth / 2 - searchBoxWidth / 2 - 22 / 2;
 
-        this.list = new ModListWidget(this.minecraft, this.paneWidth, this.height, paneY + 19, this.height - 36, 66, "", list, this);
+        this.list = new ModListWidget(this.minecraft, this.paneWidth, this.height, paneY + 19, this.height - 36, 36, "", list, this);
         this.list.reloadFilters();
 
         this.addWidget(new ButtonWidget(this.width / 2 - 154, this.height - 28, 150, 20, Language.translate("Open Mods Folder"), button -> {
@@ -65,7 +66,10 @@ public class ModsScreen extends ExtraScreen {
         this.renderDirtBackground();
         drawCenteredString(this.font, this.title, this.width / 2, 8, 0xFFFFFF);
         if (list != null) {
+            GL11.glEnable(GL11.GL_SCISSOR_TEST);
+            GL11.glScissor(0, (36) * ExtraScreen.scale, this.paneWidth * ExtraScreen.scale, (this.height - 36 - paneY - 19) * ExtraScreen.scale);
             list.render(mouseX, mouseY);
+            GL11.glDisable(GL11.GL_SCISSOR_TEST);
         }
         super.render(mouseX, mouseY);
     }

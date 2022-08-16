@@ -2,6 +2,7 @@ package me.kalmemarq.legacygui.gui.widget;
 
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
 import me.kalmemarq.legacygui.gui.IRenderable;
+import me.kalmemarq.legacygui.text.Text;
 
 public abstract class AbstractWidget extends ExtraDrawableHelper implements IRenderable {
     public int x;
@@ -11,11 +12,12 @@ public abstract class AbstractWidget extends ExtraDrawableHelper implements IRen
 
     public boolean visible = true;
     public boolean active = true;
+    public float alpha = 1.0f;
 
-    private String message;
+    private Text message;
     protected boolean hovered;
 
-    public AbstractWidget(int x, int y, int width, int height, String title) {
+    public AbstractWidget(int x, int y, int width, int height, Text title) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -37,11 +39,16 @@ public abstract class AbstractWidget extends ExtraDrawableHelper implements IRen
         return false;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(Text message) {
         this.message = message;
     }
 
-    public String getMessage() {
+    @Deprecated
+    public void setMessage(String message) {
+        this.message = Text.literal(message);
+    }
+
+    public Text getMessage() {
         return this.message;
     }
 

@@ -4,6 +4,9 @@ import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.gui.DrawableHelper;
 import com.mojang.minecraft.renderer.Tesselator;
 import me.kalmemarq.legacygui.LegacyGUIMod;
+import me.kalmemarq.legacygui.font.TextRenderer;
+import me.kalmemarq.legacygui.text.OrderedText;
+import me.kalmemarq.legacygui.text.Text;
 import me.kalmemarq.legacygui.util.*;
 import org.lwjgl.opengl.GL11;
 
@@ -146,16 +149,38 @@ public class ExtraDrawableHelper extends DrawableHelper {
         ExtraTesselator.endAndDraw();
     }
 
+    public static void drawCenteredText(TextRenderer textRenderer, String text, int centerX, int y, int color) {
+        textRenderer.drawWithShadow(text, (float)(centerX - textRenderer.getWidth(text) / 2), (float)y, color);
+    }
+
+    public static void drawCenteredText(TextRenderer textRenderer, Text text, int centerX, int y, int color) {
+        OrderedText orderedText = text.asOrderedText();
+        textRenderer.drawWithShadow(orderedText, (float)(centerX - textRenderer.getWidth(orderedText) / 2), (float)y, color);
+    }
+
+    public static void drawWithShadow(TextRenderer textRenderer, OrderedText text, int x, int y, int color) {
+        textRenderer.drawWithShadow(text, (float)x, (float)y, color);
+    }
+
+    public static void drawTextWithShadow(TextRenderer textRenderer, Text text, int x, int y, int color) {
+        textRenderer.drawWithShadow(text, (float)x, (float)y, color);
+    }
+
+
+    public static void drawStringWithShadow(TextRenderer textRenderer, String text, int x, int y, int color) {
+        textRenderer.drawWithShadow(text, (float)x, (float)y, color);
+    }
+
     public static void drawStringShadow(String text, int x, int y, int color) {
-        TextRenderer.drawStringShadow(text, x, y, color);
+        me.kalmemarq.legacygui.util.TextRenderer.drawStringShadow(text, x, y, color);
     }
 
     public static void drawString(String text, int x, int y, int color) {
-        TextRenderer.drawString(text, x, y, color);
+        me.kalmemarq.legacygui.util.TextRenderer.drawString(text, x, y, color);
     }
 
     public static void drawCenteredString(String text, int x, int y, int color) {
-        TextRenderer.drawStringShadow(text, x - LegacyGUIMod.getMCInstance().font.width(text) / 2, y, color);
+        me.kalmemarq.legacygui.util.TextRenderer.drawStringShadow(text, x - LegacyGUIMod.getMCInstance().font.width(text) / 2, y, color);
     }
 
 //    public static enum GradientDir {

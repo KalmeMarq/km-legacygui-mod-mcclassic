@@ -4,16 +4,13 @@ import com.mojang.minecraft.*;
 import com.mojang.minecraft.gamemode.GameMode;
 import com.mojang.minecraft.gui.CreativeBuildScreen;
 import com.mojang.minecraft.gui.InGameHud;
-import com.mojang.minecraft.gui.PauseScreen;
 import com.mojang.minecraft.gui.Screen;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.LevelRenderer;
 import com.mojang.minecraft.player.Player;
 import com.mojang.minecraft.renderer.Textures;
 import me.kalmemarq.legacygui.LegacyGUIMod;
-import me.kalmemarq.legacygui.SurvivalMode;
 import me.kalmemarq.legacygui.Util;
-import me.kalmemarq.legacygui.gui.ITickable;
 import me.kalmemarq.legacygui.gui.screen.*;
 import me.kalmemarq.legacygui.util.*;
 import org.lwjgl.input.Keyboard;
@@ -21,7 +18,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
@@ -29,7 +25,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.awt.*;
-import java.io.File;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin implements IMinecraftExtra {
@@ -125,12 +120,12 @@ public abstract class MinecraftMixin implements IMinecraftExtra {
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_F2)) {
-			if (!this.takingScreenshot) {
-				this.takingScreenshot = true;
+//			if (!this.takingScreenshot) {
+//				this.takingScreenshot = true;
 				ScreenshotManager.takeScreenshot((Minecraft)(Object)this, Util.getGameDirectory(), this.width, this.height);
-			}
+//			}
 		} else {
-			this.takingScreenshot = false;
+//			this.takingScreenshot = false;
 		}
 	}
 
@@ -201,6 +196,11 @@ public abstract class MinecraftMixin implements IMinecraftExtra {
 		}
 
 		return var3;
+	}
+
+	@Redirect(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/level/Level;isSolid(FFFF)Z"))
+	private boolean ajafrui(Level instance, float y, float z, float size, float v) {
+		return false;
 	}
 
 		@Redirect(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/Minecraft;generateNewLevel(I)V"))

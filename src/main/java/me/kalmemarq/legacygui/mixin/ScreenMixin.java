@@ -2,6 +2,7 @@ package me.kalmemarq.legacygui.mixin;
 
 import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.gui.Screen;
+import me.kalmemarq.legacygui.LegacyGUIMod;
 import me.kalmemarq.legacygui.gui.screen.ExtraScreen;
 import me.kalmemarq.legacygui.util.IScreenExtra;
 import org.lwjgl.input.Mouse;
@@ -34,6 +35,7 @@ public abstract class ScreenMixin implements IScreenExtra {
         if (((Screen)(Object)this) instanceof ExtraScreen) {
             ((ExtraScreen)(Object)this).children.clear();
             ((ExtraScreen)(Object)this).widgets.clear();
+            ((ExtraScreen)(Object)this).textRenderer = LegacyGUIMod.textRenderer;
         }
     }
 

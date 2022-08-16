@@ -1,5 +1,6 @@
 package me.kalmemarq.legacygui.gui.hud;
 
+import com.mojang.minecraft.ChatMessage;
 import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.gamemode.CreativeMode;
 import com.mojang.minecraft.gamemode.SurvivalMode;
@@ -54,6 +55,11 @@ public class InGameHud extends ExtraDrawableHelper {
 
             this.lastToolHighlight = id;
         }
+
+        int var19;
+        for(var19 = 0; var19 < LegacyGUIMod.inGameHud.chatHud.messages.size(); ++var19) {
+            ++this.chatHud.messages.get(var19).age;
+        }
     }
 
     public void render(float deltaTime) {
@@ -101,7 +107,7 @@ public class InGameHud extends ExtraDrawableHelper {
         if (!(this.minecraft.gameMode instanceof CreativeMode) && !TitleScreen.hideHud && !TitleScreen.showF3) {
             String score = "Score: &e" + this.minecraft.player.getScore();
             TextRenderer.drawStringShadow(score, this.screenWidth - this.minecraft.font.width(score) - 2, 2, 16777215);
-            TextRenderer.drawStringShadow("Arrows: " + this.minecraft.player.arrows, this.screenWidth / 2 + 8, this.screenHeight - 33, 16777215);
+//            TextRenderer.drawStringShadow("Arrows: " + this.minecraft.player.arrows, this.screenWidth / 2 + 8, this.screenHeight - 33, 16777215);
         }
 
         if (!TitleScreen.hideHud && TitleScreen.showF3) {
@@ -112,6 +118,10 @@ public class InGameHud extends ExtraDrawableHelper {
 
         if (Keyboard.isKeyDown(LegacyGUIMod.PLAYERLIST_KEYBIND.key) && this.minecraft.connectionManager != null && this.minecraft.connectionManager.isConnected()) {
             this.playerListHud.render(screenWidth);
+        }
+
+        if (!TitleScreen.hideHud) {
+            this.chatHud.render();
         }
 
         RenderHelper.disableBlend();
@@ -178,5 +188,9 @@ public class InGameHud extends ExtraDrawableHelper {
 
             this.blit((this.screenWidth - 15) / 2, (this.screenHeight - 15) / 2, 0, 0, 15, 15);
         }
+    }
+
+    public void addMessage(String message) {
+        this.chatHud.addMessage(message);
     }
 }

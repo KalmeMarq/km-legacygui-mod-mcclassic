@@ -2,6 +2,7 @@ package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.gui.Screen;
+import me.kalmemarq.legacygui.font.TextRenderer;
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
 import me.kalmemarq.legacygui.gui.IRenderable;
 import me.kalmemarq.legacygui.gui.widget.AbstractSelectionList;
@@ -19,6 +20,7 @@ public abstract class ExtraScreen extends Screen implements IScreenExtra {
     public List<IRenderable> children = new ArrayList<>();
     public List<AbstractWidget> widgets = new ArrayList<>();
     public static int scale = 3;
+    public TextRenderer textRenderer;
 
     public ExtraScreen() {
         this("");

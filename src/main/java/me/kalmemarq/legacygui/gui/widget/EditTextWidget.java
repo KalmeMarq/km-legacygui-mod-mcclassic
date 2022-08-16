@@ -2,6 +2,7 @@ package me.kalmemarq.legacygui.gui.widget;
 
 import com.mojang.minecraft.Minecraft;
 import me.kalmemarq.legacygui.LegacyGUIMod;
+import me.kalmemarq.legacygui.text.Text;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Keyboard;
 
@@ -26,7 +27,7 @@ public class EditTextWidget extends AbstractWidget {
     }
 
     public EditTextWidget(int x, int y, int width, int height) {
-        super(x, y, width, height, "");
+        super(x, y, width, height, Text.empty());
     }
 
     public void setPlaceholder(String placeholder) {

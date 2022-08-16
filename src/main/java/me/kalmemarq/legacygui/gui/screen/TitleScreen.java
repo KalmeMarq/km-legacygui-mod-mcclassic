@@ -1,19 +1,24 @@
 package me.kalmemarq.legacygui.gui.screen;
 
 import com.mojang.minecraft.util.Mth;
+import me.kalmemarq.legacygui.LegacyGUIMod;
+import me.kalmemarq.legacygui.font.TextRenderer;
 import me.kalmemarq.legacygui.gui.ExtraDrawableHelper;
 import me.kalmemarq.legacygui.gui.widget.ButtonWidget;
+import me.kalmemarq.legacygui.gui.widget.PressableTextWidget;
 import me.kalmemarq.legacygui.gui.widget.TexturedButtonWidget;
-import me.kalmemarq.legacygui.util.*;
+import me.kalmemarq.legacygui.text.Text;
+import me.kalmemarq.legacygui.text.style.Formatting;
+import me.kalmemarq.legacygui.util.Language;
+import me.kalmemarq.legacygui.util.RenderHelper;
+import me.kalmemarq.legacygui.util.SplashManager;
 import net.fabricmc.loader.api.FabricLoader;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Random;
 
-
 public class TitleScreen extends ExtraScreen {
-    private static final String COPYRIGHT = "Copyright Mojang AB. Do not distribute!";
-    private int copyrightWidth;
+    private static final Text COPYRIGHT = Text.literal("Copyright Mojang AB. Do not distribute!").formatted(Formatting.STRIKETHROUGH);
     public static boolean showF3 = false;
     public static boolean hideHud = false;
     private String splash;
@@ -31,37 +36,40 @@ public class TitleScreen extends ExtraScreen {
             this.splash = SplashManager.getRandom();
         }
 
-        copyrightWidth = this.font.width(COPYRIGHT);
-
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45, 200, 20, Language.translate("menu.singleplayer"), button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45, 200, 20, Text.translatable("menu.singleplayer"), button -> {
             this.minecraft.openScreen(new CreateNewLevelScreen(this));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 24, 200, 20, Language.translate("menu.multiplayer"), button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 24, 200, 20, Text.translatable("menu.multiplayer"), button -> {
             this.minecraft.openScreen(new MultiplayerScreen(this));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 48, 98, 20, Language.translate("menu.mods"), button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 48, 98, 20, Text.translatable("menu.mods"), button -> {
             this.minecraft.openScreen(new ModsScreen(this));
         }, ((button, mouseX, mouseY) -> {
             this.drawTooltip(FabricLoader.getInstance().getAllMods().size() + " Mods", mouseX, mouseY);
         })));
 
-        this.addWidget(new ButtonWidget(this.width / 2 + 2, this.height / 4 + 45 + 48, 98, 20, Language.translate("Texture Packs"), button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 + 2, this.height / 4 + 45 + 48, 98, 20, Text.translatable("Texture Packs"), button -> {
         }));
 
         this.addWidget(new TexturedButtonWidget(this.width / 2 - 100 - 24, this.height / 4 + 45 + 86, 20, 20, 0, 106, 20, "gui/gui.png", button -> {
             this.minecraft.openScreen(new LanguageScreen(this));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 86, 98, 20, Language.translate("menu.options"), button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 - 100, this.height / 4 + 45 + 86, 98, 20, Text.translatable("menu.options"), button -> {
             this.minecraft.openScreen(new OptionsScreen(this, this.minecraft.options));
         }));
 
-        this.addWidget(new ButtonWidget(this.width / 2 + 2, this.height / 4 + 45 + 86, 98, 20, Language.translate("menu.quit"), button -> {
+        this.addWidget(new ButtonWidget(this.width / 2 + 2, this.height / 4 + 45 + 86, 98, 20, Text.translatable("menu.quit"), button -> {
             this.minecraft.destroy();
             System.exit(0);
         }));
+
+        int copyrightWidth = this.textRenderer.getWidth(COPYRIGHT);
+        int copyrightX = this.width - copyrightWidth - 2;
+        this.addWidget(new PressableTextWidget(copyrightX, this.height - 10, copyrightWidth, 10, COPYRIGHT, 0xAAAAAA, button -> {
+        }, this.textRenderer));
     }
 
     @Override
@@ -107,8 +115,7 @@ public class TitleScreen extends ExtraScreen {
         drawCenteredString(this.font, this.splash, 0, -8, 0xfff717);
         GL11.glPopMatrix();
 
-        TextRenderer.drawStringShadow("Minecraft c0.30 (" + FabricLoader.getInstance().getAllMods().size() + " Mods)", 1, 1, 0xAAAAAA);
-        drawString(this.font, COPYRIGHT, this.width - this.copyrightWidth - 1, this.height - 10, 0xAAAAAA);
+        ExtraDrawableHelper.drawStringWithShadow(this.textRenderer, "Minecraft c0.30 (" + FabricLoader.getInstance().getAllMods().size() + " Mods)", 1, 1, 0xAAAAAA);
 
         super.render(mouseX, mouseY);
     }
